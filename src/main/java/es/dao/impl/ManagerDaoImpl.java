@@ -1,6 +1,4 @@
 package es.dao.impl;
-
-
 import es.constant.DAO;
 import es.dao.ManagerDao;
 import es.entity.Course;

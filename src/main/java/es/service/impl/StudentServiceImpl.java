@@ -6,6 +6,7 @@ import es.entity.User;
 import es.service.StudentService;
 import es.service.UserService;
 
+
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -67,13 +68,19 @@ public class StudentServiceImpl implements StudentService, UserService {
     }
 
     @Override
+
     public boolean applySection(String section_id, String student_id, String application) {
         //这里应该也要加入时间的限制
-        if(isConflict(student_id,section_id))
+        if (isConflict(student_id, section_id))
             return false;
-        return DAO.studentDao.applySection(section_id,student_id,application);
-
+        return DAO.studentDao.applySection(section_id, student_id, application);
     }
+
+    public ArrayList<Map<String, Object>> getMySections(String section_id) {
+        return null;
+    }
+
+
 
     @Override
     public List<Map<String, Object>> completedSections(String student_id) {
