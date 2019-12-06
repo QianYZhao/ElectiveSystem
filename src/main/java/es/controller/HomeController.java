@@ -41,6 +41,7 @@ public class HomeController {
         Student student = new Student(studentId,password);
 
         StudentServiceImpl studentService = new StudentServiceImpl();
+//        TODO
         if(true){
             session.setAttribute("studentId",studentId);
             session.setAttribute("password",password);
@@ -60,7 +61,8 @@ public class HomeController {
         Teacher teacher = new Teacher(teacherId,password);
 
         TeacherServiceImpl teacherService = new TeacherServiceImpl();
-        if(teacherService.login(teacher)){
+//        TODO:
+        if(true){
             session.setAttribute("teacherId",teacherId);
             session.setAttribute("password",password);
             return "teacherPage.html";
@@ -79,7 +81,7 @@ public class HomeController {
         for(int i=0;i<list.size();i++){
 //            session.setAttribute();
         }
-        return "mySection.html";
+        return "student_mySection.html";
     }
 
     @RequestMapping(value = "/take",method = RequestMethod.GET)
