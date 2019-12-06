@@ -87,8 +87,6 @@ public class HomeController {
     @RequestMapping(value = "/take",method = RequestMethod.GET)
     public String take(HttpSession session){
         StudentServiceImpl studentService = new StudentServiceImpl();
-        studentService.take((String)session.getAttribute("studentId"));
-
         return "studentLoginPage.html";
     }
 

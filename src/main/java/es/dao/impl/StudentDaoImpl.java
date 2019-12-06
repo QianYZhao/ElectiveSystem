@@ -1,6 +1,6 @@
 package es.dao.impl;
 
-import es.constant.AttributeLimits;
+import es.constant.DAO;
 import es.dao.StudentDao;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class StudentDaoImpl implements StudentDao {
         String sql= "insert into takes " +
                 "(student_id,section_id) " +
                 "values("+student_id+"," +section_id+")";
-        boolean bool =BaseDaoImpl.execute(sql);
+        boolean bool = DAO.baseDao.execute(sql);
         return bool;
     }
 
@@ -25,7 +25,7 @@ public class StudentDaoImpl implements StudentDao {
                 "set state ='dropped' " +
                 "where student_id= "+student_id+
                 " and section_id="+section_id;
-        return BaseDaoImpl.execute(sql);
+        return DAO.baseDao.execute(sql);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class StudentDaoImpl implements StudentDao {
                 "from section left outer join course" +
                 " where course_name like %" +
                 keyword +"%";
-        List<Map<String, Object>> list= BaseDaoImpl.search(sql);
+        List<Map<String, Object>> list= DAO.baseDao.search(sql);
         return list;
     }
 
@@ -46,7 +46,7 @@ public class StudentDaoImpl implements StudentDao {
                 " set application = '"+application+"'"+
                 "where student_id= "+student_id+
                 " and section_id="+section_id;
-        return BaseDaoImpl.execute(sql);
+        return DAO.baseDao.execute(sql);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class StudentDaoImpl implements StudentDao {
         String sql= "select * " +
                 "from takes left outer join section" +
                 " where student_id=" +student_id;
-        List<Map<String, Object>> list= BaseDaoImpl.search(sql);
+        List<Map<String, Object>> list= DAO.baseDao.search(sql);
         return list;
     }
 
@@ -66,19 +66,47 @@ public class StudentDaoImpl implements StudentDao {
                 "left outer join sec_exam" +
                 " left outer join examination" +
                 " where T.student_id=" +student_id;
-        List<Map<String, Object>> list= BaseDaoImpl.search(sql);
+        List<Map<String, Object>> list= DAO.baseDao.search(sql);
         return list;
     }
 
 
     @Override
-    public List<Map<String, Object>> getESTime_slot(String student_id) {
+    public List<Map<String, Object>> getSectionTime_slot(String section_id) {
         String sql = "select * " +
-                "from takes T" +
-                "left outer join sec_time_slot" +
+                "from sec_time_slot" +
                 "left outer join time_slot" +
-                " where T.student_id=" +student_id;
-        List<Map<String, Object>> list= BaseDaoImpl.search(sql);
+                " where section_id=" + section_id;
+        List<Map<String, Object>> list=DAO.baseDao.search(sql);
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> getSelectedSections(String student_id) {
+        String sql = "select * " +
+                "from takes left outer join section left outer join course" +
+                " where student_id=" +student_id+
+                "and state = taken";
+        List<Map<String, Object>> list= DAO.baseDao.search(sql);
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> getSectionInfo(String section_id) {
+        //开课加上教室,加上
+        String sql = "select *" +
+                "from section natural join sec_classroom natural join classroom" +
+                "where section_id ="+ section_id;
+        List<Map<String, Object>> list= DAO.baseDao.search(sql);
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> getSectionExam(String section_id) {
+        String sql="select *" +
+                "from sec_exam natural join examination" +
+                "where section_id ="+section_id;
+        List<Map<String, Object>> list= DAO.baseDao.search(sql);
         return list;
     }
 

@@ -1,9 +1,13 @@
 package es.dao.impl;
-
+import es.constant.DAO;
 import es.dao.ManagerDao;
+import es.entity.Course;
 import es.entity.Section;
 import es.entity.Student;
 import es.entity.Teacher;
+
+import java.util.List;
+import java.util.Map;
 
 public class ManagerDaoImpl implements ManagerDao {
     @Override
@@ -15,13 +19,13 @@ public class ManagerDaoImpl implements ManagerDao {
               student.getName()+","+
               student.getEntrance_year()+","+
               student.getDept_name()+")";
-      boolean bool= BaseDaoImpl.execute(sql);
+      boolean bool= DAO.baseDao.execute(sql);
 
       if(bool){
           sql ="insert into users values("+
                   student.getId()+" ,"+
                   "'123456' )";
-          bool=BaseDaoImpl.execute(sql);
+          bool=DAO.baseDao.execute(sql);
           if (bool==true){
               return true;
           } else {
@@ -29,7 +33,7 @@ public class ManagerDaoImpl implements ManagerDao {
                       " where student_id ="+
                       student.getId();
               while (true){
-                  if (BaseDaoImpl.execute(sql))
+                  if (DAO.baseDao.execute(sql))
                       return false;
               }
           }
@@ -52,7 +56,7 @@ public class ManagerDaoImpl implements ManagerDao {
                 "insert into users values("+
                     teacher.getId()+" ,"+
                     "'123456' )";
-        boolean bool= BaseDaoImpl.execute(sql);
+        boolean bool= DAO.baseDao.execute(sql);
         return bool;
     }
 
@@ -66,15 +70,44 @@ public class ManagerDaoImpl implements ManagerDao {
                 section.getYear()+","+
                 section.getEvaluation_mode()+","+
                 section.getSemester()+")";
-        return BaseDaoImpl.execute(sql);
+        return DAO.baseDao.execute(sql);
     }
 
 
     @Override
     public boolean deleteSection(String section_id) {
+
         String sql= "delete form section " +
                 "where section_id=" +
                 section_id;
-        return BaseDaoImpl.execute(sql);
+        return DAO.baseDao.execute(sql);
+    }
+
+    @Override
+    public boolean deleteCourse(String course_id) {
+        String sql= "delete from course " +
+                "where course_id ="+
+                course_id;
+        return DAO.baseDao.execute(sql);
+
+    }
+
+    @Override
+    public boolean addCourse(Course course) {
+        String sql= "insert into course values("+
+                course.getCourse_id()+","+
+                course.getCourse_name()+","+
+                course.getType()+","+
+                course.getCredit()+","+
+                course.getDept_name()+" )";
+        return DAO.baseDao.execute(sql);
+    }
+
+    @Override
+    public List<Map<String, Object>> getSameSemesterSections(Section section) {
+        String sql = "select *  from  section " +
+                "where year ="+section.getYear()+
+                "and semester = "+section.getSemester();
+        return DAO.baseDao.search(sql);
     }
 }
