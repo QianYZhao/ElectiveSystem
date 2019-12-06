@@ -1,4 +1,4 @@
-package es.entity.impl;
+package es.entity;
 
 import es.entity.User;
 
@@ -6,11 +6,30 @@ public class Student implements User {
     private String name;
     private String student_id;
     private String password;
+    private String entrance_year;
+    private String dept_name;
 
-    public Student(String student_id, String password){
+    public Student(String student_id,String password){
         this.password= password;
         this.student_id= student_id;
     }
+
+    public String getStudent_id() {
+        return student_id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEntrance_year() {
+        return entrance_year;
+    }
+
+    public String getDept_name() {
+        return dept_name;
+    }
+
 
     public String getName() {
         return name;
@@ -22,11 +41,6 @@ public class Student implements User {
 
     public String getId() {
         return student_id;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
     }
 
 }

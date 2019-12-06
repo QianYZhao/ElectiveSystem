@@ -1,10 +1,14 @@
 package es.dao.impl;
 
-import es.dao.BaseDao;
+
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-public class BaseDaoImpl implements BaseDao {
+public class BaseDaoImpl {
     private final static String user = "root";
     private final static  String password = "mysql@2692277504";
     private final static   String UTR = "jdbc:mysql://localhost:3306/starbaba?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC";
@@ -21,17 +25,27 @@ public class BaseDaoImpl implements BaseDao {
     }
 
 
-    public static ResultSet search(String  sql){
-        ResultSet resultSet= null;
+    public static List<Map<String,Object>> search(String  sql){
+
+        List<Map<String,Object>> list =new LinkedList<>();
         try{
             Connection connection= getConnection();
             Statement statement= connection.createStatement();
-            resultSet = statement.executeQuery(sql);
+             ResultSet resultSet = statement.executeQuery(sql);
+            ResultSetMetaData metaData= resultSet.getMetaData();
+            int count= metaData.getColumnCount();
+            while (resultSet.next()){
+                Map<String ,Object> map= new HashMap<>();
+                for(int i=0;i<count;i++){
+                    map.put(metaData.getColumnName(i),resultSet.getObject(i));
+                }
+                list.add(map);
+            }
             connection.close();
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return resultSet;
+       return list;
     }
 
 

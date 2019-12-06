@@ -10,6 +10,11 @@ public class Teacher implements User {
         return null;
     }
 
+    @Override
+    public String getPassword() {
+        return null;
+    }
+
     public Teacher(String teacher_id,String password){
         this.teacher_id = teacher_id;
         this.password = password;
