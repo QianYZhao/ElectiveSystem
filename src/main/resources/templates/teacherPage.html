@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Teacher Info</title>
+
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        body{background:cadetblue;background-size:cover;font-size: 16px;}
+        .form{background: rgba(255,255,255,0.2);width:400px;margin:200px auto;top:100px;}
+        #login_form{display: block;}
+        .fa{display: inline-block;top: 50px;left: 6px;position: relative;color: #ccc;}
+        .form-group{margin: 40px auto;}
+        .btn{margin-left: 40%;}
+    </style>
+</head>
+<body>
+<header>Welocome,
+    <label th:text="${session.teacherId}"></label>教师！</header>
+<div class="container">
+    <div class="form row">
+        <form class="form-horizontal" id="login_form">
+            <div class="col-sm-9 col-md-9">
+                <div class="form-group">
+                    <i class="fa fa-lock fa-lg"></i>
+                    <a class="btn btn-primary" href="">查看学生花名册</a>
+                </div>
+
+                <div class="form-group">
+                    <i class="fa fa-lock fa-lg"></i>
+                    <a class="btn btn-primary" href="">查看教师已开设课程</a>
+                </div>
+
+                <div class="form-group">
+                    <i class="fa fa-user fa-lg"></i>
+                    <a class="btn btn-primary" href="">管理选课事务申请</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

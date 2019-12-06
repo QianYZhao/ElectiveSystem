@@ -5,6 +5,8 @@ import es.service.StudentService;
 import es.service.UserService;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class StudentServiceImpl implements StudentService, UserService {
     @Override
@@ -19,6 +21,11 @@ public class StudentServiceImpl implements StudentService, UserService {
 
     @Override
     public ResultSet searchSections() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Map<String, Object>> getMySections(String section_id) {
         return null;
     }
 

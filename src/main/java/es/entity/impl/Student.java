@@ -2,12 +2,12 @@ package es.entity.impl;
 
 import es.entity.User;
 
-public class student implements User {
+public class Student implements User {
     private String name;
     private String student_id;
     private String password;
 
-    public student(String student_id,String password){
+    public Student(String student_id, String password){
         this.password= password;
         this.student_id= student_id;
     }
