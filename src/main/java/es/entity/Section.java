@@ -7,8 +7,6 @@ public class Section {
     private int class_times;
     private String year;
     private String evaluation_mode;
-
-
     private String semester;
 
     public String getSection_id() {

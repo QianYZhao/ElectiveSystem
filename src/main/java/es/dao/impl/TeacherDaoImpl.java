@@ -1,5 +1,6 @@
 package es.dao.impl;
 
+import es.constant.DAO;
 import es.dao.TeacherDao;
 
 import java.util.List;
@@ -13,17 +14,17 @@ public class TeacherDaoImpl implements TeacherDao {
                 "from takes join student " +
                 "where section= "+section_id+
                 "and state = taken";
-        List<Map<String, Object>> list = BaseDaoImpl.search(sql);
+        List<Map<String, Object>> list = DAO.baseDao.search(sql);
         return list;
     }
 
     @Override
-    public List<Map<String, Object>> handleApplication(String section_id) {
+    public List<Map<String, Object>> getSectionApplication(String section_id) {
         String sql= "select *" +
                 "from takes join student " +
                 "where section= "+section_id+
                 "and state = applying";
-        List<Map<String, Object>> list = BaseDaoImpl.search(sql);
+        List<Map<String, Object>> list =DAO.baseDao.search(sql);
         return list;
 
     }
@@ -34,6 +35,6 @@ public class TeacherDaoImpl implements TeacherDao {
                 "set grade = " +grade +
                 "where student_id= "+student_id+
                 " and section_id="+section_id;
-        return BaseDaoImpl.execute(sql);
+        return DAO.baseDao.execute(sql);
     }
 }

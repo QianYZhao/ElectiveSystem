@@ -2,17 +2,21 @@ package es.dao.impl;
 
 
 
+import es.dao.BaseDao;
+import es.dao.StudentDao;
+import es.dao.TeacherDao;
+import es.entity.Student;
+
 import java.sql.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class BaseDaoImpl {
+public class BaseDaoImpl implements BaseDao {
     private final static String user = "root";
     private final static  String password = "mysql@2692277504";
     private final static   String UTR = "jdbc:mysql://localhost:3306/starbaba?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC";
-
     private static Connection getConnection(){
         Connection conn=null;
         try{
@@ -25,7 +29,7 @@ public class BaseDaoImpl {
     }
 
 
-    public static List<Map<String,Object>> search(String  sql){
+    public  List<Map<String,Object>> search(String  sql){
 
         List<Map<String,Object>> list =new LinkedList<>();
         try{
@@ -50,7 +54,7 @@ public class BaseDaoImpl {
 
 
 //add ,delete and update
-    public static boolean execute(String sql){
+    public  boolean execute(String sql){
         boolean bool= false;
         try{
             Connection connection = getConnection();
