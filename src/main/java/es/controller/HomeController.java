@@ -1,7 +1,7 @@
 package es.controller;
-import es.entity.User;
-import es.entity.impl.Student;
-import es.entity.impl.Teacher;
+
+import es.entity.Student;
+import es.entity.Teacher;
 import es.service.impl.StudentServiceImpl;
 import es.service.impl.TeacherServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -77,10 +77,11 @@ public class HomeController {
         ArrayList<Map<String,Object>> list = new ArrayList<>();
         StudentServiceImpl studentService = new StudentServiceImpl();
 //        System.out.println((String) session.getAttribute("studentId"));
-        list = studentService.getMySections((String) session.getAttribute("studentId"));
-        for(int i=0;i<list.size();i++){
-//            session.setAttribute();
-        }
+//        list = studentService.getMySections((String) session.getAttribute("studentId"));
+//        for(int i=0;i<list.size();i++){
+////            session.setAttribute();
+//        }
+
         return "student_mySection.html";
     }
 

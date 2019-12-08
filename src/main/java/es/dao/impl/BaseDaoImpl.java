@@ -62,7 +62,6 @@ public class BaseDaoImpl implements BaseDao {
             if(statement.executeUpdate(sql)>0)
                 bool= true;
             connection.close();
-
         }catch (SQLException e){
             e.printStackTrace();
         }

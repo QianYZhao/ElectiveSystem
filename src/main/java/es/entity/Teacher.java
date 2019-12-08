@@ -8,6 +8,10 @@ public class Teacher implements User {
     private String dept_name;
     private String password;
 
+    public Teacher(String teacher_id,String password){
+        this.teacher_id = teacher_id;
+        this.password = password;
+    }
     @Override
     public String getId() {
         return null;

@@ -20,7 +20,6 @@ public class StudentServiceImpl implements StudentService, UserService {
         if(currentTime>Limits.takeEndTime ||currentTime<Limits.takeStartTime)
             return false;//在选课时间段才可以选课
 
-
         // 时间冲突检测，考试冲突，选课性质检查，教室最大人数限制，学生的学分不能超过最大上限
         List<Map<String, Object>> selectedSections= DAO.studentDao.getSelectedSections(student_id);
         int selectedCredit=0;
