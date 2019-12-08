@@ -93,7 +93,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public List<Map<String, Object>> getSectionInfo(String section_id) {
-        //开课加上教室,加上
+        //开课加上教室
         String sql = "select *" +
                 "from section natural join sec_classroom natural join classroom" +
                 "where section_id ="+ section_id;
