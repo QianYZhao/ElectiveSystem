@@ -34,6 +34,9 @@ public class ManagerServiceImpl implements ManagerService {
                 List<Map<String,Object>> sectionInfo= DAO.studentDao.getSectionInfo(section_id);
                 for(Map map1:sectionInfo){
                     String classroom_id= (String)map1.get("room_number");
+                    if(classroom_id.equals(classroom.getClassroom_id())){
+
+                    }
 
                 }
 

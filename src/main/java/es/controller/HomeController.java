@@ -15,7 +15,6 @@ import java.util.Map;
 
 @Controller
 public class HomeController {
-
     @RequestMapping("/home")
     public String getHomePage(){
         return "homePage.html";
@@ -84,7 +83,6 @@ public class HomeController {
 
         return "student_mySection.html";
     }
-
     @RequestMapping(value = "/take",method = RequestMethod.GET)
     public String take(HttpSession session){
         StudentServiceImpl studentService = new StudentServiceImpl();

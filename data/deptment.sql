@@ -1,0 +1,21 @@
+insert into department values('Civil Eng.','123456789', 'Chandler','this is my deptment');
+insert into department values('Biology','123456789', 'Candlestick','this is my deptment');
+insert into department values('History','123456789', 'Taylor','this is my deptment');
+insert into department values('Physics','123456789', 'Wrigley','this is my deptment');
+insert into department values('Marketing','123456789', 'Lambeau','this is my deptment');
+insert into department values('Pol. Sci.', '123456789','Whitman','this is my deptment');
+insert into department values('English', '123456789','Palmer','this is my deptment';
+insert into department values('Accounting','123456789', 'Saucon','this is my deptment');
+insert into department values('Comp. Sci.', '123456789','Lamberton','this is my deptment');
+insert into department values('Languages','123456789', 'Linderman','this is my deptment');
+insert into department values('Finance', '123456789','Candlestick','this is my deptment');
+insert into department values('Geology','123456789', 'Palmer','this is my deptment');
+insert into department values('Cybernetics','123456789', 'Mercer','this is my deptment');
+insert into department values('Astronomy', '123456789','Taylor','this is my deptment');
+insert into department values('Athletics','123456789', 'Bronfman','this is my deptment');
+insert into department values('Statistics','123456789', 'Taylor','this is my deptment');
+insert into department values('Psychology','123456789', 'Thompson','this is my deptment');
+insert into department values('Math','123456789', 'Brodhead','this is my deptment');
+insert into department values('Elec. Eng.','123456789', 'Main','this is my deptment');
+insert into department values('Mech. Eng.','123456789', 'Rauch','this is my deptment');
+
