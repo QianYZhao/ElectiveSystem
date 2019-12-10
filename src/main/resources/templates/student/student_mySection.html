@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>My Sections</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <caption th:text="${session.studentId}"></caption>
+        <thead>
+        <tr>
+            <th>课程序号</th>
+            <th>最大选课人数</th>
+            <th>学期</th>
+            <th>年份</th>
+            <th>上课时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${session.student_id1}"></td>
+            <td th:text="${session.name1}"></td>
+            <td th:text="${session.entrance_year1}"></td>
+            <td th:text="${session.dept_name1}"></td>
+        </tr>
+        <tr>
+
+            <td th:text="${session.student_id2}"></td>
+            <td th:text="${session.name2}"></td>
+            <td th:text="${session.entrance_year2}"></td>
+            <td th:text="${session.dept_name2}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+
+</script>
+</html>

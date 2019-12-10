@@ -21,35 +21,35 @@
 </head>
 <body>
 <div class="container">
-    <div class="text-info" id="wel">Welcome,
-        <label th:text="${session.studentId}"></label>同学！</div>
+    <div class="text-info" id="wel">Welcome</div>
     <div class="form row">
         <form class="form-horizontal" id="login_form">
             <div class="col-sm-9 col-md-9">
                 <div class="form-group">
                     <i class="fa fa-lock fa-lg"></i>
-                    <a class="btn btn-primary" href="/take">选课</a>
+                    <a class="btn btn-primary" href="/getImportTeacherPage">导入教师信息</a>
                 </div>
 
                 <div class="form-group">
                     <i class="fa fa-lock fa-lg"></i>
-                    <a class="btn btn-primary" href="/quit">退课</a>
+                    <a class="btn btn-primary" href="/getImportStudentPage">导入学生信息</a>
                 </div>
 
                 <div class="form-group">
                     <i class="fa fa-user fa-lg"></i>
-                    <a class="btn btn-primary" href="/getMySections">查看课表</a>
+                    <a class="btn btn-primary" href="/getImportSectionPage">导入课程信息</a>
                 </div>
 
                 <div class="form-group">
                     <i class="fa fa-lock fa-lg"></i>
-                    <a class="btn btn-primary" href="/getSectionInfo">查看开课信息</a>
+                    <a class="btn btn-primary" href="/getImportCoursePage">导入开课信息</a>
                 </div>
 
                 <div class="form-group">
                     <i class="fa fa-lock fa-lg"></i>
-                    <a class="btn btn-primary" href="/apply">选课事务申请</a>
+                    <a class="btn btn-primary" href="">删除课程</a>
                 </div>
+
             </div>
         </form>
     </div>
