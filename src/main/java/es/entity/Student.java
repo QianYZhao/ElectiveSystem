@@ -9,9 +9,16 @@ public class Student implements User {
     private String entrance_year;
     private String dept_name;
 
-    public Student(String student_id,String password){
-        this.password= password;
-        this.student_id= student_id;
+    public Student(String student_id, String name, String entrance_year, String dept_name) {
+        this.student_id = student_id;
+        this.name = name;
+        this.entrance_year = entrance_year;
+        this.dept_name = dept_name;
+    }
+
+    public Student(String student_id, String password) {
+        this.password = password;
+        this.student_id = student_id;
     }
 
     public String getStudent_id() {

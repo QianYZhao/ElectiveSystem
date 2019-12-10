@@ -16,12 +16,12 @@ import java.util.Map;
 public class BaseDaoImpl implements BaseDao {
     private final static String user = "root";
     private final static  String password = "mysql@2692277504";
-    private final static   String UTR = "jdbc:mysql://localhost:3306/starbaba?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC";
+    private final static   String URL = "jdbc:mysql://localhost:3306/Local instance MySQL80";
     private static Connection getConnection(){
         Connection conn=null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn= DriverManager.getConnection(UTR,user,password);
+            conn= DriverManager.getConnection(URL,user,password);
         }catch (Exception e){
             e.printStackTrace();
         }

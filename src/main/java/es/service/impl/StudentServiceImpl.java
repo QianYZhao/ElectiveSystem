@@ -108,7 +108,7 @@ public class StudentServiceImpl implements StudentService, UserService {
 
     @Override
     public boolean quit() {
-        return true;// 假装推出
+        return true;// 假装退出
     }
 
 
