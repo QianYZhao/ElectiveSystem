@@ -18,10 +18,10 @@ public class StudentServiceImpl implements StudentService, UserService {
     public boolean take(String section_id,String student_id) {
         int currentTime= (int) (System.currentTimeMillis() / 1000);
         if(currentTime>Limits.takeEndTime ||currentTime<Limits.takeStartTime)
-            return false;//在选课时间段才可以选课
+            return false;
 
 
-        // 时间冲突检测，考试冲突，选课性质检查，教室最大人数限制，学生的学分不能超过最大上限
+
         List<Map<String, Object>> selectedSections= DAO.studentDao.getSelectedSections(student_id);
         int selectedCredit=0;
         for(int i=0;i<selectedSections.size();i++){
@@ -29,19 +29,19 @@ public class StudentServiceImpl implements StudentService, UserService {
         }
 
         List<Map<String, Object>> sectionInfo= DAO.studentDao.getSectionInfo(section_id);
-        //只能得到开课的教室和开课的信息
+
         int sectionCredit = (int) sectionInfo.get(0).get("credit");
         int max_students = (int) sectionInfo.get(0).get("max_students");
 
         if(selectedCredit +sectionCredit>Limits.max_credits){
-            System.out.println("您选课分数已达"+Limits.max_credits+"学分上限!" );
+         //   System.out.println("您选课分数已达"+Limits.max_credits+"学分上限!" );
             return false;
         }
 
         List<Map<String, Object>> students =DAO.teacherDao.getStudentRoster(section_id);
-        int studentNumbers =students.size();//有多少人已经选课
+        int studentNumbers =students.size();
         if(studentNumbers==max_students)
-            return false;//已达课程的最大选课人数
+            return false;
 
         if(isConflict(student_id,section_id))
             return false;
@@ -98,7 +98,7 @@ public class StudentServiceImpl implements StudentService, UserService {
         List<Map<String,Object>> list= DAO.userDao.get_user_by_id(user.getId());
         if(list.size()==0){
             return false;
-            //告诉用户不存在
+
         }
 
         String password = (String) list.get(0).get("password");
@@ -115,16 +115,16 @@ public class StudentServiceImpl implements StudentService, UserService {
 
 
     private boolean isConflict(String student_id,String section_id){
-        // 时间冲突检测，考试冲突，教室最大人数限制
+
         List<Map<String, Object>> selectedSections= DAO.studentDao.getSelectedSections(student_id);
         List<Map<String, Object>> sectionInfo= DAO.studentDao.getSectionInfo(section_id);
-        //只能得到开课的教室和开课的信息
+
         int  classroomCapacity =(int)sectionInfo.get(0).get(" capacity");
 
         List<Map<String, Object>> students =DAO.teacherDao.getStudentRoster(section_id);
-        int studentNumbers =students.size();//有多少人已经选课
+        int studentNumbers =students.size();
         if(studentNumbers==classroomCapacity)
-            return true;//教室已经满了
+            return true;
 
 
         //判断课程的时间是否冲突,判断考试时间是不是冲突

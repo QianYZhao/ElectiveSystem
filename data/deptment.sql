@@ -4,7 +4,7 @@ insert into department values('History','123456789', 'Taylor','this is my deptme
 insert into department values('Physics','123456789', 'Wrigley','this is my deptment');
 insert into department values('Marketing','123456789', 'Lambeau','this is my deptment');
 insert into department values('Pol. Sci.', '123456789','Whitman','this is my deptment');
-insert into department values('English', '123456789','Palmer','this is my deptment';
+insert into department values('English', '123456789','Palmer','this is my deptment');
 insert into department values('Accounting','123456789', 'Saucon','this is my deptment');
 insert into department values('Comp. Sci.', '123456789','Lamberton','this is my deptment');
 insert into department values('Languages','123456789', 'Linderman','this is my deptment');
