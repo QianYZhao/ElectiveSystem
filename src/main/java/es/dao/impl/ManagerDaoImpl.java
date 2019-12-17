@@ -13,55 +13,74 @@ public class ManagerDaoImpl implements ManagerDao {
     @Override
     public boolean addStudents(Student student) {
         //向student插入数据，如果不成功便返回false，如果成功就向user中插入数据，如果向user
-        //插入失败，删除插入students操作，如果成果便返回
-      String sql ="insert into student values("+
-              student.getId()+","+
-              student.getName()+","+
-              student.getEntrance_year()+","+
-              student.getDept_name()+")";
-      boolean bool= DAO.baseDao.execute(sql);
+        //插入失败，删除插入students操作，如果成果便返
+        String sql ="insert into users values('"+
+                student.getId()+"' ,"+
+                "'123456' )";
+         boolean bool= DAO.baseDao.execute(sql);
 
-      if(bool){
-          sql ="insert into users values("+
-                  student.getId()+" ,"+
-                  "'123456' )";
+         if(bool){
+          sql ="insert into student values( '"+
+                  student.getId()+"','"+
+                  student.getName()+"','"+
+                  student.getEntrance_year()+"','"+
+                  student.getDept_name()+"')";
           bool=DAO.baseDao.execute(sql);
           if (bool==true){
               return true;
           } else {
-              sql= "delete * from student" +
-                      " where student_id ="+
-                      student.getId();
+              sql= "delete * from users" +
+                      " where user_id ='"+
+                      student.getId()+"'";
               while (true){
                   if (DAO.baseDao.execute(sql))
                       return false;
               }
-          }
+           }
 
       }else {
           return false;
       }
 
-
+// 测试通过
 
     }
 
     @Override
     public boolean addTeachers(Teacher teacher) {
-        String sql ="insert into instructor values("+
-                teacher.getId()+","+
-                teacher.getName()+","+
-                teacher.getDept_name()+")\n"+
-
-                "insert into users values("+
-                    teacher.getId()+" ,"+
+        // 测试通过
+        String sql = "insert into users values('"+
+                    teacher.getId()+" ',"+
                     "'123456' )";
         boolean bool= DAO.baseDao.execute(sql);
-        return bool;
+        if(bool){
+            sql ="insert into instructor values('"+
+                    teacher.getId()+"','"+
+                    teacher.getName()+"','"+
+                    teacher.getDept_name()+"',"+
+                    teacher.getSalary()+")";
+            bool=DAO.baseDao.execute(sql);
+            if (bool==true){
+                return true;
+            } else {
+                sql= "delete from users" +
+                        " where user_id = '"+
+                        teacher.getId()+"'";
+                while (true){
+                    if (DAO.baseDao.execute(sql))
+                        return false;
+                }
+            }
+
+        }else {
+            return false;
+        }
+
     }
 
     @Override
     public boolean addSections(Section section) {
+        //在addsection的时候，还要加上上课地点，时间，考试
         String sql= "insert into section values("+
                 section.getSection_id()+" ,"+
                 section.getCourse_id()+","+
@@ -76,7 +95,7 @@ public class ManagerDaoImpl implements ManagerDao {
 
     @Override
     public boolean deleteSection(String section_id) {
-
+        // 同时删除的还有联系集，上课教室，考试
         String sql= "delete form section " +
                 "where section_id=" +
                 section_id;
@@ -85,6 +104,7 @@ public class ManagerDaoImpl implements ManagerDao {
 
     @Override
     public boolean deleteCourse(String course_id) {
+        //检查是不是需要删除 开课
         String sql= "delete from course " +
                 "where course_id ="+
                 course_id;

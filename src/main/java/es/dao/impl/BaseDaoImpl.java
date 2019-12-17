@@ -12,7 +12,7 @@ import java.util.Map;
 public class BaseDaoImpl implements BaseDao {
     private final static String user = "root";
     private final static  String password = "mysql@2692277504";
-<<<<<<< HEAD
+
     private final static   String UTR = "jdbc:mysql://localhost:3306/selectcourse?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC";
     private static Connection getConnection(){
         Connection conn=null;
@@ -21,14 +21,6 @@ public class BaseDaoImpl implements BaseDao {
              Class.forName("com.mysql.cj.jdbc.Driver");
             conn= DriverManager.getConnection(UTR,user,password);
             System.out.println("连接成功 。。。。");
-=======
-    private final static   String URL = "jdbc:mysql://localhost:3306/Local instance MySQL80";
-    private static Connection getConnection(){
-        Connection conn=null;
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn= DriverManager.getConnection(URL,user,password);
->>>>>>> 917baec440e84683013f50d71fec3403e3c979f3
         }catch (Exception e){
             e.printStackTrace();
         }

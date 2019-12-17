@@ -1,0 +1,1 @@
+insert into sec_classroom values("10","100")

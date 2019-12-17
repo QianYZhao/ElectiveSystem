@@ -21,11 +21,9 @@ public class StudentServiceImpl implements StudentService, UserService {
             return false;
 
 
-<<<<<<< HEAD
 
-=======
         // 时间冲突检测，考试冲突，选课性质检查，教室最大人数限制，学生的学分不能超过最大上限
->>>>>>> 917baec440e84683013f50d71fec3403e3c979f3
+
         List<Map<String, Object>> selectedSections= DAO.studentDao.getSelectedSections(student_id);
         int selectedCredit=0;
         for(int i=0;i<selectedSections.size();i++){
