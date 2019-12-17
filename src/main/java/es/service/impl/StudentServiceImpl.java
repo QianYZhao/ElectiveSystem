@@ -20,14 +20,12 @@ public class StudentServiceImpl implements StudentService, UserService {
         if(currentTime>Limits.takeEndTime ||currentTime<Limits.takeStartTime)
             return false;
 
-
-
         // 时间冲突检测，考试冲突，选课性质检查，教室最大人数限制，学生的学分不能超过最大上限
 
         List<Map<String, Object>> selectedSections= DAO.studentDao.getSelectedSections(student_id);
         int selectedCredit=0;
         for(int i=0;i<selectedSections.size();i++){
-            selectedCredit= selectedCredit+ (int)selectedSections.get(i).get("credit");
+            selectedCredit= selectedCredit + (int)selectedSections.get(i).get("credit");
         }
 
         List<Map<String, Object>> sectionInfo= DAO.studentDao.getSectionInfo(section_id);
@@ -37,6 +35,7 @@ public class StudentServiceImpl implements StudentService, UserService {
 
         if(selectedCredit +sectionCredit>Limits.max_credits){
          //   System.out.println("您选课分数已达"+Limits.max_credits+"学分上限!" );
+
             return false;
         }
 

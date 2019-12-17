@@ -1,10 +1,45 @@
+
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Application</title>
+    <meta charset="utf-8" />
+    <title>Login</title>
+
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        body{background:cadetblue;background-size:cover;font-size: 16px;}
+        .form{background: rgba(255,255,255,0.2);width:400px;margin:100px auto;}
+        #login_form{display: block;}
+        .fa{display: inline-block;top: 27px;left: 6px;position: relative;color: #ccc;}
+        input[type="text"],input[type="password"]{padding-left:26px;}
+    </style>
 </head>
 <body>
+<div class="container">
+    <div class="form row">
+        <form class="form-horizontal col-sm-offset-3 col-md-offset-3" id="login_form" method="post" action="">
+            <div class="col-sm-9 col-md-9">
+                <div class="form-group">
+                    <i class="fa fa-user fa-lg"></i>
+                    <input class="form-control required" type="text" placeholder="sectionId" name="applyId" autofocus="autofocus" maxlength="20"/>
+                </div>
 
+                <div class="form-group">
+                    <i class="fa fa-lock fa-lg"></i>
+                    <input class="form-control required" type="password" placeholder="申请理由" name="application" maxlength="250"/>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success pull-right" value="提交申请 "/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>

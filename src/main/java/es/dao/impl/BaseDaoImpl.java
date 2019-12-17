@@ -1,7 +1,4 @@
 package es.dao.impl;
-
-
-
 import es.dao.BaseDao;
 import java.sql.*;
 import java.util.HashMap;
@@ -21,6 +18,8 @@ public class BaseDaoImpl implements BaseDao {
              Class.forName("com.mysql.cj.jdbc.Driver");
             conn= DriverManager.getConnection(UTR,user,password);
             System.out.println("连接成功 。。。。");
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
