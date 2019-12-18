@@ -29,16 +29,13 @@ public class StudentServiceImpl implements StudentService, UserService {
         }
 
         List<Map<String, Object>> sectionInfo= DAO.studentDao.getSectionInfo(section_id);
-
         int sectionCredit = (int) sectionInfo.get(0).get("credit");
         int max_students = (int) sectionInfo.get(0).get("max_students");
 
         if(selectedCredit +sectionCredit>Limits.max_credits){
-         //   System.out.println("您选课分数已达"+Limits.max_credits+"学分上限!" );
-
+            System.out.println("您选课分数已达"+Limits.max_credits+"学分上限!" );
             return false;
         }
-
         List<Map<String, Object>> students =DAO.teacherDao.getStudentRoster(section_id);
         int studentNumbers =students.size();
         if(studentNumbers==max_students)
@@ -46,7 +43,6 @@ public class StudentServiceImpl implements StudentService, UserService {
 
         if(isConflict(student_id,section_id))
             return false;
-
         return DAO.studentDao.take(section_id,student_id);
     }
 

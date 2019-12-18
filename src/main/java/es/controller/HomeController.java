@@ -103,7 +103,7 @@ public class HomeController {
      *  */
     @RequestMapping(value = "/getMySections",method = RequestMethod.GET)
     public String getMySections(HttpSession session){
-        ArrayList<Map<String,Object>> list = new ArrayList<>();
+        List<Map<String,Object>> list = new ArrayList<>();
         StudentServiceImpl studentService = new StudentServiceImpl();
         list = studentService.getMySections((String) session.getAttribute("studentId"));
 

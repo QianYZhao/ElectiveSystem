@@ -9,10 +9,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import javax.rmi.CORBA.Tie;
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 import java.util.Map;
 
@@ -29,26 +33,44 @@ public class ManagerServiceImpl implements ManagerService, UserService {
     }
 
     @Override
-    public boolean addSections(Section section, Classroom classroom, Examination exam) {
+    public boolean addSections(Section section) {
         // 先找到与这门课程同一年上的全部课程，再查看这里面的课程是否有上课教室冲突，考试教室冲突,上课时间冲突
         //再安排一门上课的时候需要安排一门
-
         List<Map<String,Object>> addedSections= DAO.managerDao.getSameSemesterSections(section);
+        List<String> time_slots= section.getTime_slot_ids();
+        Time exam_start= section.getExamination().getExam_starTime();
+        Time exam_end =section.getExamination().getExam_endTime();
+        Date date= section.getExamination().getDate();
         if (addedSections.size()>0){
             for(Map map:addedSections){
                 String section_id= (String)map.get("section_id");
                 List<Map<String,Object>> sectionInfo= DAO.studentDao.getSectionInfo(section_id);
                 for(Map map1:sectionInfo){
-//                  教室冲突
+                    //教室冲突，上课时间
                     String classroom_id= (String)map1.get("room_number");
-                    if(classroom_id.equals(classroom.getClassroom_id())){
-                        return false;
+                    String time_slot= (String)map1.get("time_slot_id");
+                    //教室相同，后判断时间是不是相同,默认课程不同的课都是在同一教室
+                    if(classroom_id.equals(section.getClassroom_id())){
+                       if(time_slots.contains(time_slot))
+                           return false;
+                    }
+                    //考试冲突
+                    Date date1= (Date)map1.get("Date");
+                    Time exam_start1=(Time)map1.get("exam_start");
+                    Time exam_end1 =(Time)map1.get("exam_end");
+
+                    if(date1.equals(date)){
+                        if(section.getClassroom_id().equals((String)map1.get("classroom_id"))){
+                            //日期相同，教室相同，再看是不是时间相同
+                            if(exam_start.before(exam_end1)&&exam_start1.before(exam_end))
+                                return false;
+                        }
                     }
                 }
             }
-
-            return false;
-        }else {
+            return DAO.managerDao.addSections(section);
+        }
+        else {
             return DAO.managerDao.addSections(section);
         }
 

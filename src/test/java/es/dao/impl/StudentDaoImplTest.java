@@ -97,6 +97,10 @@ class StudentDaoImplTest {
 
     @Test
     void getSectionInfo() {
+        String str= "100";
+        List<Map<String,Object>> list = studentDao.getSectionInfo(str);
+        System.out.println(list.size());
+
     }
 
     @Test

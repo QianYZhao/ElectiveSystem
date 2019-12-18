@@ -138,15 +138,17 @@ public class ManagerDaoImpl implements ManagerDao {
                 section.getClassroom_id()+"','"+
                 section.getSection_id()+"')";
         boolean bool4= DAO.baseDao.execute(sec_classroom);
-
-        if (bool4)
+        if (bool4){
             return true;
-        else {
-
+        }else {
+            String delete =
+                    "delete from section where section_id='"+section.getSection_id()+"'\n"+
+                    "delete from sec_time_slot where  section_id='"+section.getSection_id()+"'\n"+
+                    "delete from examination where exam_id='" +section.getExamination().getExam_id()+"'\n"+
+                    "delete from  sec_exam where section_id ='"+section.getSection_id()+"'";
         }
 
-
-
+        return false;
 
 
 
@@ -157,9 +159,15 @@ public class ManagerDaoImpl implements ManagerDao {
     @Override
     public boolean deleteSection(String section_id) {
         // 同时删除的还有联系集，上课教室，考试
-        String sql= "delete form section " +
-                "where section_id=" +
-                section_id;
+        String sql=
+                "delete from section where section_id='"+section_id+"'\n"+
+                        "delete from sec_time_slot where  section_id='"+section_id+"'\n"+
+                        "delete from examination where exam_id =" +
+                        " (select exam_id from examination natual join sec_exam where sec_exam.section_id='"+section_id+"')\n+" +
+                        "delete from  sec_exam where section_id ='"+section_id+"'\n";
+
+
+
         return DAO.baseDao.execute(sql);
     }
 
@@ -167,28 +175,28 @@ public class ManagerDaoImpl implements ManagerDao {
     public boolean deleteCourse(String course_id) {
         //检查是不是需要删除 开课
         String sql= "delete from course " +
-                "where course_id ="+
-                course_id;
+                "where course_id ='"+
+                course_id+"'";
         return DAO.baseDao.execute(sql);
 
     }
 
     @Override
     public boolean addCourse(Course course) {
-        String sql= "insert into course values("+
-                course.getCourse_id()+","+
-                course.getCourse_name()+","+
-                course.getType()+","+
-                course.getCredit()+","+
-                course.getDept_name()+" )";
+        String sql= "insert into course values('"+
+                course.getCourse_id()+"','"+
+                course.getCourse_name()+"','"+
+                course.getType()+"','"+
+                course.getCredit()+"','"+
+                course.getDept_name()+"')";
         return DAO.baseDao.execute(sql);
     }
 
     @Override
     public List<Map<String, Object>> getSameSemesterSections(Section section) {
         String sql = "select *  from  section " +
-                "where year ="+section.getYear()+
-                "and semester = "+section.getSemester();
+                "where year ='"+section.getYear()+
+                "'and semester = '"+section.getSemester()+"'";
         return DAO.baseDao.search(sql);
     }
 }
