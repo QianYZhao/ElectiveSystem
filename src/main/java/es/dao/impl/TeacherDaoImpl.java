@@ -37,4 +37,12 @@ public class TeacherDaoImpl implements TeacherDao {
                 " and section_id="+section_id;
         return DAO.baseDao.execute(sql);
     }
+
+    @Override
+    public List<Map<String, Object>> getTeachingCourse(String instructor_id) {
+        String sql = "";
+//        TODO:
+        List<Map<String, Object>> list = DAO.baseDao.search(sql);
+        return list;
+    }
 }

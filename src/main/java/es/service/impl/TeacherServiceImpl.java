@@ -40,6 +40,11 @@ public class TeacherServiceImpl implements TeacherService, UserService {
     }
 
     @Override
+    public List<Map<String, Object>> getTeachingSection(String instructor_id) {
+        return DAO.teacherDao.getTeachingCourse(instructor_id);
+    }
+
+    @Override
     public boolean importGrades(String section_id, String student_id, String grade) {
         return DAO.teacherDao.importGrades(student_id,section_id,grade);
     }

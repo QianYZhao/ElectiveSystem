@@ -89,7 +89,6 @@ public class ManagerServiceImpl implements ManagerService, UserService {
                     DAO.managerDao.addSections(section);
 
                 }
-
             }
         }catch (IOException e){
             e.printStackTrace();
