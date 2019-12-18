@@ -20,7 +20,7 @@ public class ManagerServiceImpl implements ManagerService, UserService {
 
     @Override
     public boolean addStudents(Student student) {
-      return DAO.managerDao.addStudents(student);
+        return DAO.managerDao.addStudents(student);
     }
 
     @Override
@@ -195,6 +195,7 @@ public class ManagerServiceImpl implements ManagerService, UserService {
 
     @Override
     public boolean deleteCourse(String course_id) {
+        //如果不能删掉的话，说明这门课有人选课
         return DAO.managerDao.deleteCourse(course_id);
     }
 

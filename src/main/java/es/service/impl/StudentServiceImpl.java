@@ -48,8 +48,6 @@ public class StudentServiceImpl implements StudentService, UserService {
             return false;
 
         return DAO.studentDao.take(section_id,student_id);
-
-
     }
 
     @Override
@@ -77,8 +75,8 @@ public class StudentServiceImpl implements StudentService, UserService {
         return DAO.studentDao.applySection(section_id, student_id, application);
     }
 
-    public ArrayList<Map<String, Object>> getMySections(String section_id) {
-        return null;
+    public List<Map<String, Object>> getMySections(String section_id) {
+       return DAO.studentDao.getSelectedSections(section_id);
     }
 
 
@@ -90,7 +88,7 @@ public class StudentServiceImpl implements StudentService, UserService {
 
     @Override
     public List<Map<String, Object>> viewExamInfo(String student_id) {
-       return DAO.studentDao.viewExamInfo(student_id);
+        return DAO.studentDao.viewExamInfo(student_id);
     }
 
 
@@ -99,9 +97,7 @@ public class StudentServiceImpl implements StudentService, UserService {
         List<Map<String,Object>> list= DAO.userDao.get_user_by_id(user.getId());
         if(list.size()==0){
             return false;
-
         }
-
         String password = (String) list.get(0).get("password");
         if(password.equals(user.getPassword()))
             return true;
