@@ -25,12 +25,12 @@ public class TeacherServiceImpl implements TeacherService, UserService {
 
     @Override
     public boolean quit() {
-        //do nothing
+        //这里可以销毁到session_id
         return true;
     }
 
     @Override
-    public List<Map<String, Object>> getStudentRoster(String section_id) {
+    public List<Map<String, Object>> getStudentRoster(String section_id){
        return DAO.teacherDao.getStudentRoster(section_id);
     }
 

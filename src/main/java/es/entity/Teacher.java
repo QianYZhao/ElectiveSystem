@@ -21,7 +21,7 @@ public class Teacher implements User {
     }
     @Override
     public String getId() {
-        return null;
+        return teacher_id;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Teacher implements User {
         return name;
     }
 
-    public String getTeacher_id() {
-        return teacher_id;
+    public Double getSalary() {
+        return salary;
     }
 }

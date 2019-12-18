@@ -27,8 +27,8 @@ class StudentDaoImplTest {
     @Test
     void take() {
         String stud_id ="S100";
-        String id= "99";
-        boolean bool = studentDao.take(id,stud_id);
+        String section_id= "100";
+        boolean bool = studentDao.take(section_id,stud_id);
         System.out.println(bool);
     }
 
@@ -42,7 +42,7 @@ class StudentDaoImplTest {
 
     @Test
     void searchSections() {
-        String key ="Image";
+        String key ="Mechanics";
         List<Map<String,Object>> list=studentDao.searchSections(key);
         System.out.println(list.size());
         for (Map map :list){
@@ -61,18 +61,38 @@ class StudentDaoImplTest {
 
     @Test
     void completedSections() {
+        String id ="S100";
+        List<Map<String,Object>> list=studentDao.completedSections(id);
+        System.out.println(list.size());
+
     }
 
     @Test
     void viewExamInfo() {
+        String stud_id ="S100";
+
+        List<Map<String,Object>> list=studentDao.viewExamInfo(stud_id);
+        System.out.println(list.size());
+
+
     }
 
     @Test
     void getSectionTime_slot() {
+        String id ="100";
+        List<Map<String,Object>> list=studentDao.getSectionTime_slot(id);
+        System.out.println(list.size());
+       //
+
     }
 
     @Test
     void getSelectedSections() {
+        String stud_id ="S100";
+        String id= "99";
+        String apply= "申请加入共产党";
+        List<Map<String,Object>> list = studentDao.getSelectedSections(stud_id);
+        System.out.println(list.size());
     }
 
     @Test

@@ -7,23 +7,25 @@ import java.util.List;
 import java.util.Map;
 
 public class TeacherDaoImpl implements TeacherDao {
+    //全部测试成功
 
     @Override
     public List<Map<String, Object>> getStudentRoster(String section_id){
-        String sql= "select student_id ,name ,dept_name" +
+        String sql= "select student_id ,name ,dept_name " +
                 "from takes join student " +
-                "where section= "+section_id+
-                "and state = taken";
+                "where takes.student_id =student.sutdent_id\n" +
+                "and section_id="+section_id;
         List<Map<String, Object>> list = DAO.baseDao.search(sql);
         return list;
+
     }
 
     @Override
     public List<Map<String, Object>> getSectionApplication(String section_id) {
-        String sql= "select *" +
-                "from takes join student " +
-                "where section= "+section_id+
-                "and state = applying";
+        String sql="select student_id ,name ,dept_name,application" +
+                " from takes join student " +
+                "where takes.student_id =student.sutdent_id " +
+                "and state ='applying' and section_id="+section_id;
         List<Map<String, Object>> list =DAO.baseDao.search(sql);
         return list;
 

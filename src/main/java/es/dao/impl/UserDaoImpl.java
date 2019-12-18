@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UserDaoImpl implements UserDao {
+    //测试全部通过
     @Override
     public List<Map<String, Object>> get_user_by_id(String user_id) {
         String sql= "select *" +
@@ -19,7 +20,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean userRegister(String userId, String password) {
         String sql = "insert into users " +
-                "(user_id,password) values (" + userId+", "+ password+")";
+                "(user_id,password) values ('" + userId+"', '"+ password+"')";
         return DAO.baseDao.execute(sql);
     }
 }

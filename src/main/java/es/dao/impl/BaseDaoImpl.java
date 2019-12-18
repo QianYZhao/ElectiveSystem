@@ -1,7 +1,4 @@
 package es.dao.impl;
-
-
-
 import es.dao.BaseDao;
 import java.sql.*;
 import java.util.HashMap;
@@ -12,6 +9,7 @@ import java.util.Map;
 public class BaseDaoImpl implements BaseDao {
     private final static String user = "root";
     private final static  String password = "mysql@2692277504";
+
     private final static   String UTR = "jdbc:mysql://localhost:3306/selectcourse?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC";
     private static Connection getConnection(){
         Connection conn=null;
@@ -20,6 +18,7 @@ public class BaseDaoImpl implements BaseDao {
              Class.forName("com.mysql.cj.jdbc.Driver");
             conn= DriverManager.getConnection(UTR,user,password);
             System.out.println("连接成功 。。。。");
+
 
         }catch (Exception e){
             e.printStackTrace();

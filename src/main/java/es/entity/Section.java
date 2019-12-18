@@ -1,5 +1,7 @@
 package es.entity;
 
+import java.util.List;
+
 public class Section {
     private String section_id;
     private int max_students;
@@ -8,10 +10,9 @@ public class Section {
     private String year;
     private String evaluation_mode;
     private String semester;
+    private Examination examination;
+    private String classroom_id;
 
-    public String getSection_id() {
-        return section_id;
-    }
 
     public Section(String section_id,int max_students,String evaluation_mode,int class_times,String year,String semester){
         this.section_id =section_id;
@@ -21,6 +22,30 @@ public class Section {
         this.year = year;
         this.semester = semester;
     }
+
+
+
+
+
+    public String getClassroom_id() {
+        return classroom_id;
+    }
+
+    public List<String> getTime_slot_ids() {
+        return time_slot_ids;
+    }
+
+    private List<String> time_slot_ids;
+
+    public Examination getExamination() {
+        return examination;
+    }
+
+    public String getSection_id() {
+        return section_id;
+    }
+
+
 
 
     public String getCourse_id() {

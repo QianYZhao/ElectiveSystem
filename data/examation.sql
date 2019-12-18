@@ -1,0 +1,1 @@
+insert into examination values('E1','2020-1-9','开卷考试','T100058','10','8:00','10:00')
