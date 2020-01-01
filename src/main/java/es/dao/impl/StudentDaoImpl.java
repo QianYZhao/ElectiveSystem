@@ -82,7 +82,7 @@ public class StudentDaoImpl implements StudentDao {
         String sql = "select  * " +
                 "from takes natural join sec_exam " +
                 "natural join examination  " +
-                "where student_id='" + student_id + "'";
+                "where state = 'taken' and student_id='" + student_id + "'";
         List<Map<String, Object>> list = DAO.baseDao.search(sql);
         return list;
         //测试通过
@@ -115,6 +115,7 @@ public class StudentDaoImpl implements StudentDao {
     public List<Map<String, Object>> getSectionInfo(String section_id) {
         String sql ="select * " +
                 "from section natural join sec_course natural join course natural join sec_classroom " +
+                "from section natural join sec_classroom " +
                 "natural join classroom where section_id ='"+section_id+"'";
         List<Map<String, Object>> list= DAO.baseDao.search(sql);
         return list;

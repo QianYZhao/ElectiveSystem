@@ -47,13 +47,14 @@ public class StudentServiceImpl implements StudentService, UserService {
 //            return false;
 
         return DAO.studentDao.take(section_id, student_id);
+
     }
 
     @Override
     public boolean drop(String section_id, String student_id) {
-        int currentTime = (int) (System.currentTimeMillis() / 1000);
-        if (currentTime > Limits.dropEndTime || currentTime < Limits.dropStartTime)
-            return false;//我觉得这个应该在前端做判断
+//        int currentTime = (int) (System.currentTimeMillis() / 1000);
+//        if (currentTime > Limits.dropEndTime || currentTime < Limits.dropStartTime)
+//            return false;//我觉得这个应该在前端做判断
         return DAO.studentDao.drop(section_id, student_id);
 
     }

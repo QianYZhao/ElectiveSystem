@@ -72,6 +72,7 @@ class StudentDaoImplTest {
         String stud_id ="S100";
 
         List<Map<String,Object>> list=studentDao.viewExamInfo(stud_id);
+        System.out.println(list);
         System.out.println(list.size());
 
 
@@ -97,6 +98,10 @@ class StudentDaoImplTest {
 
     @Test
     void getSectionInfo() {
+        String str= "100";
+        List<Map<String,Object>> list = studentDao.getSectionInfo(str);
+        System.out.println(list.size());
+
     }
 
     @Test

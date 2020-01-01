@@ -103,9 +103,10 @@ public class HomeController {
      * student Service
      *
      *  */
-    @RequestMapping(value = "/getMySections", method = RequestMethod.GET)
-    public String getMySections(HttpSession session) {
-        List<Map<String, Object>> list ;
+
+    @RequestMapping(value = "/getMySections",method = RequestMethod.GET)
+    public String getMySections(HttpSession session){
+        List<Map<String,Object>> list = new ArrayList<>();
         StudentServiceImpl studentService = new StudentServiceImpl();
         list = studentService.getMySections((String) session.getAttribute("studentId"));
         session.setAttribute("count_of_course", list.size());
@@ -200,6 +201,7 @@ public class HomeController {
     @RequestMapping(value = "/viewExamInfo",method = RequestMethod.GET)
     public String viewExamInfo(HttpSession session){
         String student_id = (String)session.getAttribute("student_id");
+        System.out.println(student_id);
         StudentServiceImpl studentService = new StudentServiceImpl();
         List<Map<String,Object>> list = studentService.viewExamInfo(student_id);
         System.out.println(list);
