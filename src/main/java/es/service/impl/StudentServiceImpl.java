@@ -15,54 +15,53 @@ import java.util.Map;
 
 public class StudentServiceImpl implements StudentService, UserService {
     @Override
-    public boolean take(String section_id,String student_id) {
-        int currentTime= (int) (System.currentTimeMillis() / 1000);
-        if(currentTime>Limits.takeEndTime ||currentTime<Limits.takeStartTime)
-            return false;
+    public boolean take(String section_id, String student_id) {
+//        int currentTime = (int) (System.currentTimeMillis() / 1000);
+//        if (currentTime > Limits.takeEndTime || currentTime < Limits.takeStartTime)
+//            return false;
+//
+//        // 时间冲突检测，考试冲突，选课性质检查，教室最大人数限制，学生的学分不能超过最大上限
+//
+//        List<Map<String, Object>> selectedSections = DAO.studentDao.getSelectedSections(student_id);
+//        int selectedCredit = 0;
+//        for (int i = 0; i < selectedSections.size(); i++) {
+//            selectedCredit = selectedCredit + (int) selectedSections.get(i).get("credit");
+//        }
+//
+//        List<Map<String, Object>> sectionInfo = DAO.studentDao.getSectionInfo(section_id);
+//        if(sectionInfo.size()<=0)return false;
+//        int sectionCredit = (int) sectionInfo.get(0).get("credit");
+////        int max_students = (int) sectionInfo.get(0).get("max_students");
+//
+//        if (selectedCredit + sectionCredit > Limits.max_credits) {
+//            //   System.out.println("您选课分数已达"+Limits.max_credits+"学分上限!" );
+//            return false;
+//        }
 
-        // 时间冲突检测，考试冲突，选课性质检查，教室最大人数限制，学生的学分不能超过最大上限
+//        List<Map<String, Object>> students = DAO.teacherDao.getStudentRoster(section_id);
+//        int studentNumbers = students.size();
+//        if (studentNumbers == max_students)
+//            return false;
 
-        List<Map<String, Object>> selectedSections= DAO.studentDao.getSelectedSections(student_id);
-        int selectedCredit=0;
-        for(int i=0;i<selectedSections.size();i++){
-            selectedCredit= selectedCredit + (int)selectedSections.get(i).get("credit");
-        }
+//        if (isConflict(student_id, section_id))
+//            return false;
 
-        List<Map<String, Object>> sectionInfo= DAO.studentDao.getSectionInfo(section_id);
-
-        int sectionCredit = (int) sectionInfo.get(0).get("credit");
-        int max_students = (int) sectionInfo.get(0).get("max_students");
-
-        if(selectedCredit +sectionCredit>Limits.max_credits){
-         //   System.out.println("您选课分数已达"+Limits.max_credits+"学分上限!" );
-
-            return false;
-        }
-
-        List<Map<String, Object>> students =DAO.teacherDao.getStudentRoster(section_id);
-        int studentNumbers =students.size();
-        if(studentNumbers==max_students)
-            return false;
-
-        if(isConflict(student_id,section_id))
-            return false;
-
-        return DAO.studentDao.take(section_id,student_id);
+        return DAO.studentDao.take(section_id, student_id);
     }
 
     @Override
     public boolean drop(String section_id, String student_id) {
-        int currentTime= (int) (System.currentTimeMillis() / 1000);
-        if(currentTime>Limits.dropEndTime||currentTime<Limits.dropStartTime)
+        int currentTime = (int) (System.currentTimeMillis() / 1000);
+        if (currentTime > Limits.dropEndTime || currentTime < Limits.dropStartTime)
             return false;//我觉得这个应该在前端做判断
-        return DAO.studentDao.drop(section_id,student_id);
+        return DAO.studentDao.drop(section_id, student_id);
 
     }
 
 
     @Override
     public List<Map<String, Object>> searchSections(String keyword) {
-        List<Map<String, Object>> list=DAO.studentDao.searchSections(keyword);
+        List<Map<String, Object>> list = DAO.studentDao.searchSections(keyword);
         return list;
     }
 
@@ -75,10 +74,15 @@ public class StudentServiceImpl implements StudentService, UserService {
         return DAO.studentDao.applySection(section_id, student_id, application);
     }
 
-    public List<Map<String, Object>> getMySections(String section_id) {
-       return DAO.studentDao.getSelectedSections(section_id);
+    @Override
+    public List<Map<String, Object>> getSections() {
+        return DAO.studentDao.getAllSections();
     }
 
+
+    public List<Map<String, Object>> getMySections(String section_id) {
+        return DAO.studentDao.getSelectedSections(section_id);
+    }
 
 
     @Override
@@ -94,12 +98,12 @@ public class StudentServiceImpl implements StudentService, UserService {
 
     @Override
     public boolean login(User user) {
-        List<Map<String,Object>> list= DAO.userDao.get_user_by_id(user.getId());
-        if(list.size()==0){
+        List<Map<String, Object>> list = DAO.userDao.get_user_by_id(user.getId());
+        if (list.size() == 0) {
             return false;
         }
         String password = (String) list.get(0).get("password");
-        if(password.equals(user.getPassword()))
+        if (password.equals(user.getPassword()))
             return true;
         return false;
     }
@@ -110,57 +114,56 @@ public class StudentServiceImpl implements StudentService, UserService {
     }
 
 
+    private boolean isConflict(String student_id, String section_id) {
 
-    private boolean isConflict(String student_id,String section_id){
+        List<Map<String, Object>> selectedSections = DAO.studentDao.getSelectedSections(student_id);
+        List<Map<String, Object>> sectionInfo = DAO.studentDao.getSectionInfo(section_id);
 
-        List<Map<String, Object>> selectedSections= DAO.studentDao.getSelectedSections(student_id);
-        List<Map<String, Object>> sectionInfo= DAO.studentDao.getSectionInfo(section_id);
+        int classroomCapacity = (int) sectionInfo.get(0).get(" capacity");
 
-        int  classroomCapacity =(int)sectionInfo.get(0).get(" capacity");
-
-        List<Map<String, Object>> students =DAO.teacherDao.getStudentRoster(section_id);
-        int studentNumbers =students.size();
-        if(studentNumbers==classroomCapacity)
+        List<Map<String, Object>> students = DAO.teacherDao.getStudentRoster(section_id);
+        int studentNumbers = students.size();
+        if (studentNumbers == classroomCapacity)
             return true;
 
 
         //判断课程的时间是否冲突,判断考试时间是不是冲突
         //上课时间
-        List<Map<String, Object>> sectionTime_slot= DAO.studentDao.getSectionTime_slot(section_id);
-        List<String> Time_slots= new ArrayList<>();
-        for(Map map: sectionTime_slot){
-            String time_slot_id= (String)map.get("time_slot_id");
+        List<Map<String, Object>> sectionTime_slot = DAO.studentDao.getSectionTime_slot(section_id);
+        List<String> Time_slots = new ArrayList<>();
+        for (Map map : sectionTime_slot) {
+            String time_slot_id = (String) map.get("time_slot_id");
             Time_slots.add(time_slot_id);
         }
 
         //课程的考试时间
-        List<Map<String, Object>> exam= DAO.studentDao.getSectionExam(section_id);
+        List<Map<String, Object>> exam = DAO.studentDao.getSectionExam(section_id);
         Date exam_date = null;
-        Time exam_start=null;
-        Time exam_end=null;
-        if(exam.size()>0){
-            exam_date= (Date)exam.get(0).get("date");
-            exam_start =(Time)exam.get(0).get("exam_start");
-            exam_end =(Time) exam.get(0).get("exam_end");
+        Time exam_start = null;
+        Time exam_end = null;
+        if (exam.size() > 0) {
+            exam_date = (Date) exam.get(0).get("date");
+            exam_start = (Time) exam.get(0).get("exam_start");
+            exam_end = (Time) exam.get(0).get("exam_end");
         }
 
 
-        for (int i=0;i<selectedSections.size();i++){
-            String selectedSection_id= (String) selectedSections.get(i).get("section_id");
-            List<Map<String, Object>> sec_time_slot= DAO.studentDao.getSectionTime_slot(selectedSection_id);
-            for(Map map:sec_time_slot){
-                String time_slot_id= (String)map.get("time_slot_id");
-                if(Time_slots.contains(time_slot_id))
+        for (int i = 0; i < selectedSections.size(); i++) {
+            String selectedSection_id = (String) selectedSections.get(i).get("section_id");
+            List<Map<String, Object>> sec_time_slot = DAO.studentDao.getSectionTime_slot(selectedSection_id);
+            for (Map map : sec_time_slot) {
+                String time_slot_id = (String) map.get("time_slot_id");
+                if (Time_slots.contains(time_slot_id))
                     return true;
             }
-            if(exam.size()>0){//确保要选的这一节课是有考试的
-                List<Map<String, Object>> selectedExam= DAO.studentDao.getSectionExam(selectedSection_id);
-                for(Map map: selectedExam){
-                    Date examDate= (Date) map.get("date");
-                    Time startTime= (Time) map.get("exam_start");
-                    Time endTime =(Time)map.get("exam_end");
-                    if(exam_date==examDate){//考试在同一天，再判断是不是有重叠时段
-                        if(startTime.before(exam_end)&&exam_start.before(endTime))
+            if (exam.size() > 0) {//确保要选的这一节课是有考试的
+                List<Map<String, Object>> selectedExam = DAO.studentDao.getSectionExam(selectedSection_id);
+                for (Map map : selectedExam) {
+                    Date examDate = (Date) map.get("date");
+                    Time startTime = (Time) map.get("exam_start");
+                    Time endTime = (Time) map.get("exam_end");
+                    if (exam_date == examDate) {//考试在同一天，再判断是不是有重叠时段
+                        if (startTime.before(exam_end) && exam_start.before(endTime))
                             return true;//有时间重叠
                     }
                 }

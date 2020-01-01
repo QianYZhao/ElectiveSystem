@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>My Sections</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <caption th:text="${session.studentId}"></caption>
+        <thead>
+        <tr>
+            <th>学号</th>
+            <th>姓名</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${session.r_student_id0}"></td>
+            <td th:text="${session.r_student_name0}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.r_student_id1}"></td>
+            <td th:text="${session.r_student_name1}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.r_student_id2}"></td>
+            <td th:text="${session.r_student_name2}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+
+</script>
+</html>

@@ -7,6 +7,17 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <script type="text/javascript">
+        var k = 20;
+        for(var i=0;i<k;i++){
+            var tr=document.createElement("tr");
+            tbody.appendChild(tr);
+            var td = document.createElement("td");
+            tr.appendChild(td);
+            var x = "<%=session.getAttribute('section_id'+'i')%>";
+            td.innerText = "<%=session.getAttribute('section_id'+'i')%>";
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -14,19 +25,81 @@
         <caption ></caption>
         <thead>
         <tr>
+            <th>开课序号</th>
             <th>课程序号</th>
-            <th>最大选课人数</th>
-            <th>学期</th>
             <th>年份</th>
-            <th>上课时间</th>
+            <th>课程名称</th>
+            <th>院系</th>
+            <th>学期</th>
+            <th>学分</th>
         </tr>
         </thead>
         <tbody>
+        <tr>
+            <td th:text="${session.section_id0}"></td>
+            <td th:text="${session.course_id0}"></td>
+            <td th:text="${session.year0}"></td>
+            <td th:text="${session.course_name0}"></td>
+            <td th:text="${session.dept_name0}"></td>
+            <td th:text="${session.semester0}"></td>
+            <td th:text="${session.credit0}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.section_id1}"></td>
+            <td th:text="${session.course_id1}"></td>
+            <td th:text="${session.year1}"></td>
+            <td th:text="${session.course_name1}"></td>
+            <td th:text="${session.dept_name1}"></td>
+            <td th:text="${session.semester1}"></td>
+            <td th:text="${session.credit1}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.section_id2}"></td>
+            <td th:text="${session.course_id2}"></td>
+            <td th:text="${session.year2}"></td>
+            <td th:text="${session.course_name2}"></td>
+            <td th:text="${session.dept_name2}"></td>
+            <td th:text="${session.semester2}"></td>
+            <td th:text="${session.credit2}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.section_id3}"></td>
+            <td th:text="${session.course_id3}"></td>
+            <td th:text="${session.year3}"></td>
+            <td th:text="${session.course_name3}"></td>
+            <td th:text="${session.dept_name3}"></td>
+            <td th:text="${session.semester3}"></td>
+            <td th:text="${session.credit3}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.section_id4}"></td>
+            <td th:text="${session.course_id4}"></td>
+            <td th:text="${session.year4}"></td>
+            <td th:text="${session.course_name4}"></td>
+            <td th:text="${session.dept_name4}"></td>
+            <td th:text="${session.semester4}"></td>
+            <td th:text="${session.credit4}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.section_id5}"></td>
+            <td th:text="${session.course_id5}"></td>
+            <td th:text="${session.year5}"></td>
+            <td th:text="${session.course_name5}"></td>
+            <td th:text="${session.dept_name5}"></td>
+            <td th:text="${session.semester5}"></td>
+            <td th:text="${session.credit5}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.section_id6}"></td>
+            <td th:text="${session.course_id6}"></td>
+            <td th:text="${session.year6}"></td>
+            <td th:text="${session.course_name6}"></td>
+            <td th:text="${session.dept_name6}"></td>
+            <td th:text="${session.semester6}"></td>
+            <td th:text="${session.credit6}"></td>
+        </tr>
         </tbody>
     </table>
 </div>
 </body>
-<script type="text/javascript">
-
-</script>
 </html>

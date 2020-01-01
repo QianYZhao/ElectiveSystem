@@ -27,7 +27,7 @@ class StudentDaoImplTest {
     @Test
     void take() {
         String stud_id ="S100";
-        String section_id= "100";
+        String section_id= "101";
         boolean bool = studentDao.take(section_id,stud_id);
         System.out.println(bool);
     }

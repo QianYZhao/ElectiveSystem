@@ -23,9 +23,8 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public List<Map<String, Object>> getSectionApplication(String section_id) {
         String sql="select student_id ,name ,dept_name,application" +
-                " from takes join student " +
-                "where takes.student_id =student.sutdent_id " +
-                "and state ='applying' and section_id="+section_id;
+                " from takes natural join student " +
+                "where state ='applying' and section_id="+section_id;
         List<Map<String, Object>> list =DAO.baseDao.search(sql);
         return list;
 
@@ -42,8 +41,10 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public List<Map<String, Object>> getTeachingCourse(String instructor_id) {
-        String sql = "";
+        String sql = "select * from section natural join teaches natural join sec_course natural join course " +
+                "where instructor_id='" + instructor_id+"'";
 //        TODO:
+//        System.out.println(sql);
         List<Map<String, Object>> list = DAO.baseDao.search(sql);
         return list;
     }

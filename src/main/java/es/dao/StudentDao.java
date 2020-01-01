@@ -15,4 +15,5 @@ public interface StudentDao {
     List<Map<String,Object>> getSelectedSections(String student_id);
     List<Map<String,Object>> getSectionInfo(String section_id);
     List<Map<String,Object>> getSectionExam(String section_id);
+    List<Map<String,Object>> getAllSections();
 }

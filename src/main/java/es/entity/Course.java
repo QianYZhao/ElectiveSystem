@@ -7,7 +7,7 @@ public class Course {
     int  credit;
     String dept_name;
 
-    public Course(String course_id, String course_name, String type, int credit, String dept_name) {
+    public Course(String course_id, String course_name, int credit, String dept_name) {
         this.course_id = course_id;
         this.course_name = course_name;
         this.type = type;

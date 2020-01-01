@@ -6,6 +6,8 @@ import es.entity.Teacher;
 import es.service.impl.ManagerServiceImpl;
 import es.service.impl.StudentServiceImpl;
 import es.service.impl.TeacherServiceImpl;
+import org.hibernate.validator.constraints.pl.REGON;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +35,7 @@ public class HomeController {
 
     @RequestMapping(value = "/tLogin", method = RequestMethod.GET)
     public String tLogin() {
-        return "student/teacherLoginPage.html";
+        return "teacher/teacherLoginPage.html";
     }
 
     @RequestMapping(value = "/mLogin", method = RequestMethod.GET)
@@ -70,7 +72,7 @@ public class HomeController {
         Teacher teacher = new Teacher(teacherId, password);
 
         TeacherServiceImpl teacherService = new TeacherServiceImpl();
-//        TODO:
+
         if (teacherService.login(teacher)) {
             session.setAttribute("teacherId", teacherId);
             session.setAttribute("password", password);
@@ -103,15 +105,19 @@ public class HomeController {
      *  */
     @RequestMapping(value = "/getMySections", method = RequestMethod.GET)
     public String getMySections(HttpSession session) {
-        ArrayList<Map<String, Object>> list = new ArrayList<>();
+        List<Map<String, Object>> list ;
         StudentServiceImpl studentService = new StudentServiceImpl();
         list = studentService.getMySections((String) session.getAttribute("studentId"));
         session.setAttribute("count_of_course", list.size());
+//        System.out.println(list);
         for (int i = 0; i < list.size(); i++) {
-            session.setAttribute("student_id" + i, list.get(i).get("student_id"));
-            session.setAttribute("name" + i, list.get(i).get("name"));
-            session.setAttribute("entrance_year" + i, list.get(i).get("entrance_year"));
-            session.setAttribute("dept_name" + i, list.get(i).get("dept_name"));
+            session.setAttribute("my_section_id" + i, list.get(i).get("section_id"));
+            session.setAttribute("my_course_id" + i, list.get(i).get("course_id"));
+            session.setAttribute("my_year" + i, list.get(i).get("year"));
+            session.setAttribute("my_course_name" + i, list.get(i).get("course_name"));
+            session.setAttribute("my_dept_name" + i, list.get(i).get("dept_name"));
+            session.setAttribute("my_semester" + i, list.get(i).get("semester"));
+            session.setAttribute("my_credit"+i,list.get(i).get("credit"));
         }
         return "student/student_mySection.html";
     }
@@ -125,7 +131,6 @@ public class HomeController {
     public String take(HttpServletRequest request, HttpSession session) {
         String section_id = request.getParameter("section");
         String student_id = (String) session.getAttribute("studentId");
-
         StudentServiceImpl studentService = new StudentServiceImpl();
         if (studentService.take(section_id, student_id)) {
             return "succeed.html";//返回成功的页面
@@ -158,17 +163,54 @@ public class HomeController {
     public String getSectionInfo(HttpSession session) {
         String student_id = (String) session.getAttribute("student_id");
         StudentServiceImpl studentService = new StudentServiceImpl();
-        List<Map<String, Object>> list = studentService.completedSections(student_id);
+        List<Map<String, Object>> list = studentService.getSections();
+//        System.out.println(list);
         session.setAttribute("count_of_section", list.size());
         for (int i = 0; i < list.size(); i++) {
-            session.setAttribute("section_id" + i, list.get(i).get("student_id"));
-            session.setAttribute("max_students" + i, list.get(i).get("name"));
+            session.setAttribute("section_id" + i, list.get(i).get("section_id"));
+            session.setAttribute("course_id"+i,list.get(i).get("course_id"));
             session.setAttribute("evaluation_mode" + i, list.get(i).get("entrance_year"));
-            session.setAttribute("class_times" + i, list.get(i).get("dept_name"));
+            session.setAttribute("class_times" + i, list.get(i).get("class_times"));
             session.setAttribute("year" + i, list.get(i).get("year"));
             session.setAttribute("semester" + i, list.get(i).get("semester"));
+            session.setAttribute("course_name" +i,list.get(i).get("course_name"));
+            session.setAttribute("credit"+i,list.get(i).get("credit"));
         }
         return "student/student_section_info.html";
+    }
+
+    @RequestMapping(value = "/getApplyPage",method = RequestMethod.GET)
+    public String getApplyPage(){
+        return "student/student_apply.html";
+    }
+
+    @RequestMapping(value = "/apply",method = RequestMethod.POST)
+    public String apply(HttpServletRequest request,HttpSession session){
+        String student_id = (String)session.getAttribute("student_id");
+        String section_id = request.getParameter("apply_section_id");
+        String application = request.getParameter("application");
+        StudentServiceImpl studentService = new StudentServiceImpl();
+        if(studentService.applySection(section_id,student_id,application)){
+            return "succeed.html";//返回成功的页面
+        } else {
+            return "failed.html";//返回失败的页面
+        }
+    }
+
+    @RequestMapping(value = "/viewExamInfo",method = RequestMethod.GET)
+    public String viewExamInfo(HttpSession session){
+        String student_id = (String)session.getAttribute("student_id");
+        StudentServiceImpl studentService = new StudentServiceImpl();
+        List<Map<String,Object>> list = studentService.viewExamInfo(student_id);
+        System.out.println(list);
+        for(int i=0;i<list.size();i++){
+            session.setAttribute("exam_id" + i, list.get(i).get("exam_id"));
+            session.setAttribute("date" + i, list.get(i).get("date"));
+            session.setAttribute("modality" + i, list.get(i).get("modality"));
+            session.setAttribute("exam_start" + i, list.get(i).get("exam_start"));
+            session.setAttribute("exam_end" + i, list.get(i).get("exam_end"));
+        }
+        return "student/student_view_exam_info.html";
     }
     /*
      * manager Service
@@ -216,6 +258,7 @@ public class HomeController {
     @RequestMapping(value = "/importTeachers", method = RequestMethod.POST)
     public String importTeachers(HttpServletRequest request) {
         ManagerServiceImpl managerService = new ManagerServiceImpl();
+        System.out.println(request.getParameter("path"));
         if (managerService.importing_teachers(request.getParameter("path"))) {
             return "succeed.html";//返回成功的页面
         } else {
@@ -231,7 +274,7 @@ public class HomeController {
     @RequestMapping(value = "/importCourses", method = RequestMethod.POST)
     public String importCourses(HttpServletRequest request) {
         ManagerServiceImpl managerService = new ManagerServiceImpl();
-        if (managerService.importing_teachers(request.getParameter("path"))) {
+        if (managerService.importing_course(request.getParameter("path"))) {
             return "succeed.html";//返回成功的页面
         } else {
             return "failed.html";//返回失败的页面
@@ -258,30 +301,72 @@ public class HomeController {
      */
     @RequestMapping(value = "/getRosterPage",method = RequestMethod.GET)
     public String getRosterPage(HttpSession session){
-//        String teacher_id = (String)session.getAttribute("teacher_id");
-        String section_id = (String)session.getAttribute("section_id") ;
+////        String teacher_id = (String)session.getAttribute("teacher_id");
+//        String section_id = (String)session.getAttribute("section_id");
+//        TeacherServiceImpl teacherService = new TeacherServiceImpl();
+//        teacherService.getStudentRoster(section_id);
+        return "teacher/teacher_query_roster.html";
+    }
+    @RequestMapping(value = "/getRoster",method = RequestMethod.POST)
+    public String getRoster(HttpSession session,HttpServletRequest request){
+        String section_id = request.getParameter("t_section");
         TeacherServiceImpl teacherService = new TeacherServiceImpl();
-        teacherService.getStudentRoster(section_id);
-        return "teacher_roster.html";
+        List<Map<String,Object>> list = teacherService.getStudentRoster(section_id);
+//        System.out.println(list);
+        for(int i=0;i<list.size();i++){
+            session.setAttribute("r_student_id"+i,list.get(i).get("student_id"));
+            session.setAttribute("r_student_name"+i,list.get(i).get("name"));
+        }
+        return "teacher/roster.html";
     }
     @RequestMapping(value = "/getTeachingCourses",method = RequestMethod.GET)
     public String getTeachingCourses(HttpSession session){
 
-        String teacher_id = (String)session.getAttribute("teacher_id");
+        String teacher_id = (String)session.getAttribute("teacherId");
         TeacherServiceImpl teacherService = new TeacherServiceImpl();
         List<Map<String,Object>> list =  teacherService.getTeachingSection(teacher_id);
-
+//        System.out.println(list);
         for(int i=0;i<list.size();i++){
-            session.setAttribute("section_id"+i,list.get(i).get("section_id"));
-//            session.setAttribute("");
+            session.setAttribute("t_section_id" + i, list.get(i).get("section_id"));
+            session.setAttribute("t_course_id" + i, list.get(i).get("course_id"));
+            session.setAttribute("t_year" + i, list.get(i).get("year"));
+            session.setAttribute("t_course_name" + i, list.get(i).get("course_name"));
+            session.setAttribute("t_dept_name" + i, list.get(i).get("dept_name"));
+            session.setAttribute("t_semester" + i, list.get(i).get("semester"));
+            session.setAttribute("t_credit"+i,list.get(i).get("credit"));
         }
-        return "teacher_teaching_courses.html";
+        return "teacher/teacher_teaching_courses.html";
     }
 
-    @RequestMapping(value = "/getCheckApplication",method = RequestMethod.GET)
-    public String getCheckApplication(){
-        return "teacher_manager_application.html";
+    @RequestMapping(value = "/getCheckApplicationPage",method = RequestMethod.GET)
+    public String getCheckApplicationPage(){
+        return "teacher/teacher_manager_application.html";
+    }
+    @RequestMapping(value = "/getCheckApplication",method = RequestMethod.POST)
+    public String getCheckApplication(HttpServletRequest request,HttpSession session){
+        String section_id = request.getParameter("application_section");
+        TeacherServiceImpl teacherService = new TeacherServiceImpl();
+        List<Map<String,Object>> list = teacherService.getSectionApplication(section_id);
+//        System.out.println(list);
+        for(int i=0;i<list.size();i++){
+            session.setAttribute("application_student_name"+i,list.get(i).get("name"));
+            session.setAttribute("application_student_id"+i,list.get(i).get("student_id"));
+            session.setAttribute("application"+i,list.get(i).get("application"));
+            session.setAttribute("application_dept_name"+i,list.get(i).get("dept_name"));
+        }
+        return "teacher/teacher_check.html";
     }
 
+    @RequestMapping(value = "/getImportGradesPage",method = RequestMethod.GET)
+    public String getImportGradesPage(){
+        return "teacher/teacher_import_grades_page.html";
+    }
+
+    @RequestMapping(value = "/importGrades",method = RequestMethod.GET)
+    public String importGrades(HttpServletRequest request){
+        TeacherServiceImpl teacherService = new TeacherServiceImpl();
+//        if(teacherService.importGrades(request.getParameter("path")))
+        return "";
+    }
 
 }

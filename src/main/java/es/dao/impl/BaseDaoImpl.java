@@ -15,7 +15,8 @@ public class BaseDaoImpl implements BaseDao {
         Connection conn=null;
         try{
 
-             Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
             conn= DriverManager.getConnection(UTR,user,password);
             System.out.println("连接成功 。。。。");
 

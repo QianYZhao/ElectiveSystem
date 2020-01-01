@@ -65,7 +65,7 @@ public class ManagerServiceImpl implements ManagerService, UserService {
     @Override
     public boolean importing_sections(String filename) {
         try {
-            InputStream is = new FileInputStream(new File(filename));
+            InputStream is = new FileInputStream(new File("./data/"+filename));
             Workbook excel = WorkbookFactory.create(is);
             is.close();
 
@@ -99,7 +99,7 @@ public class ManagerServiceImpl implements ManagerService, UserService {
     @Override
     public boolean importing_students(String filename) {
         try {
-            InputStream is = new FileInputStream(new File(filename));
+            InputStream is = new FileInputStream(new File("./data/"+filename));
             Workbook excel = WorkbookFactory.create(is);
             is.close();
 
@@ -131,7 +131,7 @@ public class ManagerServiceImpl implements ManagerService, UserService {
     @Override
     public boolean importing_teachers(String filename) {
         try {
-            InputStream is = new FileInputStream(new File(filename));
+            InputStream is = new FileInputStream(new File("./data/"+filename));
             Workbook excel = WorkbookFactory.create(is);
             is.close();
 
@@ -162,7 +162,7 @@ public class ManagerServiceImpl implements ManagerService, UserService {
     @Override
     public boolean importing_course(String filename) {
         try{
-            InputStream is = new FileInputStream(new File(filename));
+            InputStream is = new FileInputStream(new File("./data/"+filename));
             Workbook excel = WorkbookFactory.create(is);
             is.close();
 
@@ -176,11 +176,11 @@ public class ManagerServiceImpl implements ManagerService, UserService {
 
                     String course_id = row.getCell(0).getStringCellValue();
                     String course_name = row.getCell(1).getStringCellValue();
-                    String type = row.getCell(2).getStringCellValue();
-                    int credit = (int)row.getCell(3).getNumericCellValue();
-                    String dept_name = row.getCell(4).getStringCellValue();
+                    String dept_name = row.getCell(2).getStringCellValue();
+                    int credit = (int) row.getCell(3).getNumericCellValue();
 
-                    Course course = new Course(course_id,course_name,type,credit,dept_name);
+//                    System.out.println(credit);
+                    Course course = new Course(course_id,course_name,credit,dept_name);
 
                     DAO.managerDao.addCourse(course);
 
