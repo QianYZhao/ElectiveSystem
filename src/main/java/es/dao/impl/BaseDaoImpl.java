@@ -19,8 +19,6 @@ public class BaseDaoImpl implements BaseDao {
 
             conn= DriverManager.getConnection(UTR,user,password);
             System.out.println("连接成功 。。。。");
-
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -62,6 +60,7 @@ public class BaseDaoImpl implements BaseDao {
 
             if(statement.executeUpdate(sql)>0)
                 bool= true;
+
             connection.close();
         }catch (SQLException e){
             return false;

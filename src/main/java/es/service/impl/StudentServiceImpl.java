@@ -16,35 +16,35 @@ import java.util.Map;
 public class StudentServiceImpl implements StudentService, UserService {
     @Override
     public boolean take(String section_id, String student_id) {
-//        int currentTime = (int) (System.currentTimeMillis() / 1000);
-//        if (currentTime > Limits.takeEndTime || currentTime < Limits.takeStartTime)
-//            return false;
-//
-//        // 时间冲突检测，考试冲突，选课性质检查，教室最大人数限制，学生的学分不能超过最大上限
-//
-//        List<Map<String, Object>> selectedSections = DAO.studentDao.getSelectedSections(student_id);
-//        int selectedCredit = 0;
-//        for (int i = 0; i < selectedSections.size(); i++) {
-//            selectedCredit = selectedCredit + (int) selectedSections.get(i).get("credit");
-//        }
-//
-//        List<Map<String, Object>> sectionInfo = DAO.studentDao.getSectionInfo(section_id);
-//        if(sectionInfo.size()<=0)return false;
-//        int sectionCredit = (int) sectionInfo.get(0).get("credit");
-////        int max_students = (int) sectionInfo.get(0).get("max_students");
-//
-//        if (selectedCredit + sectionCredit > Limits.max_credits) {
-//            //   System.out.println("您选课分数已达"+Limits.max_credits+"学分上限!" );
-//            return false;
-//        }
+        int currentTime = (int) (System.currentTimeMillis() / 1000);
+        if (currentTime > Limits.takeEndTime || currentTime < Limits.takeStartTime)
+            return false;
 
-//        List<Map<String, Object>> students = DAO.teacherDao.getStudentRoster(section_id);
-//        int studentNumbers = students.size();
-//        if (studentNumbers == max_students)
-//            return false;
+        // 时间冲突检测，考试冲突，选课性质检查，教室最大人数限制，学生的学分不能超过最大上限
 
-//        if (isConflict(student_id, section_id))
-//            return false;
+        List<Map<String, Object>> selectedSections = DAO.studentDao.getSelectedSections(student_id);
+        int selectedCredit = 0;
+        for (int i = 0; i < selectedSections.size(); i++) {
+            selectedCredit = selectedCredit + (int) selectedSections.get(i).get("credit");
+        }
+
+        List<Map<String, Object>> sectionInfo = DAO.studentDao.getSectionInfo(section_id);
+        if(sectionInfo.size()<=0)return false;
+        int sectionCredit = (int) sectionInfo.get(0).get("credit");
+       int max_students = (int) sectionInfo.get(0).get("max_students");
+
+        if (selectedCredit + sectionCredit > Limits.max_credits) {
+            //   System.out.println("您选课分数已达"+Limits.max_credits+"学分上限!" );
+            return false;
+        }
+
+        List<Map<String, Object>> students = DAO.teacherDao.getStudentRoster(section_id);
+        int studentNumbers = students.size();
+        if (studentNumbers == max_students)
+            return false;
+
+        if (isConflict(student_id, section_id))
+            return false;
 
         return DAO.studentDao.take(section_id, student_id);
 
@@ -137,6 +137,7 @@ public class StudentServiceImpl implements StudentService, UserService {
             Time_slots.add(time_slot_id);
         }
 
+
         //课程的考试时间
         List<Map<String, Object>> exam = DAO.studentDao.getSectionExam(section_id);
         Date exam_date = null;
@@ -159,15 +160,18 @@ public class StudentServiceImpl implements StudentService, UserService {
             }
             if (exam.size() > 0) {//确保要选的这一节课是有考试的
                 List<Map<String, Object>> selectedExam = DAO.studentDao.getSectionExam(selectedSection_id);
-                for (Map map : selectedExam) {
-                    Date examDate = (Date) map.get("date");
-                    Time startTime = (Time) map.get("exam_start");
-                    Time endTime = (Time) map.get("exam_end");
-                    if (exam_date == examDate) {//考试在同一天，再判断是不是有重叠时段
-                        if (startTime.before(exam_end) && exam_start.before(endTime))
-                            return true;//有时间重叠
-                    }
-                }
+               if(selectedExam.size()>0){
+                   for (Map map : selectedExam) {
+                       Date examDate = (Date) map.get("date");
+                       Time startTime = (Time) map.get("exam_start");
+                       Time endTime = (Time) map.get("exam_end");
+                       if (exam_date == examDate) {//考试在同一天，再判断是不是有重叠时段
+                           if (startTime.before(exam_end) && exam_start.before(endTime))
+                               return true;//有时间重叠
+                       }
+                   }
+               }
+
             }
 
         }

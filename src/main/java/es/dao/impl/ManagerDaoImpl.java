@@ -196,10 +196,42 @@ public class ManagerDaoImpl implements ManagerDao {
     }
 
     @Override
+    public boolean deleteExam(String section_id) {
+        String sql= "SELECT exam_id FROM sec_exam where section_id='"+section_id+"'";
+        List<Map<String, Object>> examIds= DAO.baseDao.search(sql);
+        for (Map map: examIds){
+            String examId=(String) map.get("exam_id");
+            String sql1= "delete from sec_exam where exam_id='"+examId+"'";
+            Boolean bool=  DAO.baseDao.execute(sql1);
+            if (!bool){
+                return false;
+            }
+             sql1= "delete from examtion where exam_id = '"+examId+"'";
+             bool = DAO.baseDao.execute(sql1);
+             if (bool==false)
+                 return bool;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean deleteClassroom(String section_id) {
+        String sql="delete FROM sec_exam where section_id='"+section_id+"'";
+        return DAO.baseDao.execute(sql);
+    }
+
+    @Override
     public List<Map<String, Object>> getSameSemesterSections(Section section) {
         String sql = "select *  from  section " +
                 "where year ='"+section.getYear()+
                 "'and semester = '"+section.getSemester()+"'";
+        return DAO.baseDao.search(sql);
+    }
+
+    @Override
+    public List<Map<String, Object>> getCourseSection(String course_id) {
+        String  sql="SELECT * FROM sec_course where course_id='"+course_id+"';";
         return DAO.baseDao.search(sql);
     }
 }

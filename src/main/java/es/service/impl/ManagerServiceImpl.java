@@ -81,7 +81,12 @@ public class ManagerServiceImpl implements ManagerService, UserService {
 
     @Override
     public boolean deleteSection(String section_id) {
-
+        List<Map<String, Object>> takens= DAO.teacherDao.getStudentRoster(section_id);
+        if (takens.size()>0){
+           //已经有人选课是不能直接删除的，
+            DAO.managerDao.deleteExam(section_id);
+            DAO.managerDao.deleteClassroom(section_id);
+        }
         //直接删掉，如果是在选课之后应该就不能删除了
         return DAO.managerDao.deleteSection(section_id);
     }
@@ -194,6 +199,10 @@ public class ManagerServiceImpl implements ManagerService, UserService {
     @Override
     public boolean deleteCourse(String course_id) {
         //如果不能删掉的话，说明这门课有人选课
+        List<Map<String,Object>> sections= DAO.managerDao.getCourseSection(course_id);
+        if (sections.size()>0){
+            return false;
+        }
         return DAO.managerDao.deleteCourse(course_id);
     }
 

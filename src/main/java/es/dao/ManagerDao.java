@@ -15,7 +15,11 @@ public interface ManagerDao {
     boolean deleteSection(String section_id);
     boolean deleteCourse(String course_id);
     boolean addCourse(Course course);
+    boolean deleteExam(String section_id);
+    boolean deleteClassroom(String section_id);
     List<Map<String,Object>> getSameSemesterSections(Section section);
+    List<Map<String,Object>> getCourseSection(String course_id);
+
 
 
 }
