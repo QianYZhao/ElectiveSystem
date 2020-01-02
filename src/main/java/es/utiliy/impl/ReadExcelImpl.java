@@ -1,6 +1,7 @@
 package es.utiliy.impl;
 
 import es.utiliy.ReadExcel;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -29,14 +30,15 @@ public class ReadExcelImpl implements ReadExcel {
             List<String> title= new ArrayList<>();
             for (int i= firstLine.getFirstCellNum();i<firstLine.getLastCellNum();i++){
                 XSSFCell xssfCell = firstLine.getCell(i);
-                System.out.println(xssfCell.getStringCellValue());
                 title.add(xssfCell.getStringCellValue());
             }
-            for(int rowNum=1;rowNum<xssfSheet.getLastRowNum();rowNum++){
+            for(int rowNum=1;rowNum<=xssfSheet.getLastRowNum();rowNum++){
                 XSSFRow row = xssfSheet.getRow(rowNum);
                 Map<String ,String> map= new HashMap<>();
                 for(int colIx = row.getFirstCellNum(); colIx < row.getLastCellNum(); colIx++){
-                    XSSFCell cell = firstLine.getCell(colIx);
+
+                    XSSFCell cell = row.getCell(colIx);
+                    cell.setCellType(CellType.STRING);
                     String value= cell.getStringCellValue();
                     map.put(title.get(colIx),value);
                 }
