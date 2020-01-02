@@ -1,10 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Teaching Courses</title>
+    <title>teaching courses</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
+<div class="container">
+    <table class="table">
+        <caption th:text="${session.teacher_id}"></caption>
+        <thead>
+        <tr>
+            <th>开课序号</th>
+            <th>课程序号</th>
+            <th>年份</th>
+            <th>课程名称</th>
+            <th>院系</th>
+            <th>学期</th>
+            <th>学分</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${session.t_section_id0}"></td>
+            <td th:text="${session.t_course_id0}"></td>
+            <td th:text="${session.t_year0}"></td>
+            <td th:text="${session.t_course_name0}"></td>
+            <td th:text="${session.t_dept_name0}"></td>
+            <td th:text="${session.t_semester0}"></td>
+            <td th:text="${session.t_credit0}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.t_section_id1}"></td>
+            <td th:text="${session.t_course_id1}"></td>
+            <td th:text="${session.t_year1}"></td>
+            <td th:text="${session.t_course_name1}"></td>
+            <td th:text="${session.t_dept_name1}"></td>
+            <td th:text="${session.t_semester1}"></td>
+            <td th:text="${session.t_credit1}"></td>
+        </tr>
 
+        <tr>
+            <td th:text="${session.t_section_id2}"></td>
+            <td th:text="${session.t_course_id2}"></td>
+            <td th:text="${session.t_year2}"></td>
+            <td th:text="${session.t_course_name2}"></td>
+            <td th:text="${session.t_dept_name2}"></td>
+            <td th:text="${session.t_semester2}"></td>
+            <td th:text="${session.t_credit2}"></td>
+        </tr>
+
+        <tr>
+            <td th:text="${session.t_section_id3}"></td>
+            <td th:text="${session.t_course_id3}"></td>
+            <td th:text="${session.t_year3}"></td>
+            <td th:text="${session.t_course_name3}"></td>
+            <td th:text="${session.t_dept_name3}"></td>
+            <td th:text="${session.t_semester3}"></td>
+            <td th:text="${session.t_credit3}"></td>
+        </tr>
+        <tr>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
+<script type="text/javascript">
+
+</script>
 </html>

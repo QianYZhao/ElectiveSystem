@@ -15,7 +15,8 @@ public class BaseDaoImpl implements BaseDao {
         Connection conn=null;
         try{
 
-             Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
             conn= DriverManager.getConnection(UTR,user,password);
             System.out.println("连接成功 。。。。");
 
@@ -46,7 +47,7 @@ public class BaseDaoImpl implements BaseDao {
             }
             connection.close();
         }catch (SQLException e){
-            e.printStackTrace();
+           return null;
         }
        return list;
     }
@@ -63,7 +64,7 @@ public class BaseDaoImpl implements BaseDao {
                 bool= true;
             connection.close();
         }catch (SQLException e){
-            e.printStackTrace();
+            return false;
         }
         return bool;
     }

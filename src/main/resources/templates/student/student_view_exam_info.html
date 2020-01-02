@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Info</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <caption th:text="${session.studentId}"></caption>
+        <thead>
+        <tr>
+            <th>考试序号</th>
+            <th>考试日期</th>
+            <th>考试类型</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${session.exam_id0}"></td>
+            <td th:text="${session.date0}"></td>
+            <td th:text="${session.modality0}"></td>
+            <td th:text="${session.exam_start0}"></td>
+            <td th:text="${session.exam_end0}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.exam_id1}"></td>
+            <td th:text="${session.date1}"></td>
+            <td th:text="${session.modality1}"></td>
+            <td th:text="${session.exam_start1}"></td>
+            <td th:text="${session.exam_end1}"></td>
+        </tr>
+        <tr>
+            <td th:text="${session.exam_id2}"></td>
+            <td th:text="${session.date2}"></td>
+            <td th:text="${session.modality2}"></td>
+            <td th:text="${session.exam_start2}"></td>
+            <td th:text="${session.exam_end2}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+
+</script>
+</html>
