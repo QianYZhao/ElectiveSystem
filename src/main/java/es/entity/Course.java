@@ -10,7 +10,6 @@ public class Course {
     public Course(String course_id, String course_name, int credit, String dept_name) {
         this.course_id = course_id;
         this.course_name = course_name;
-        this.type = type;
         this.credit = credit;
         this.dept_name = dept_name;
     }

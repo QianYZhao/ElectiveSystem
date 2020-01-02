@@ -11,4 +11,20 @@ class ManagerServiceImplTest {
         ManagerServiceImpl managerService = new ManagerServiceImpl();
         managerService.importing_course("course.xlsx");
     }
+
+    @Test
+    void importing_sections() {
+        ManagerServiceImpl managerService = new ManagerServiceImpl();
+        managerService.importing_course("course.xlsx");
+    }
+
+    @Test
+    void importing_students() {
+        ManagerServiceImpl managerService = new ManagerServiceImpl();
+        managerService.importing_students("student.xlsx");
+    }
+
+    @Test
+    void importing_teachers() {
+    }
 }

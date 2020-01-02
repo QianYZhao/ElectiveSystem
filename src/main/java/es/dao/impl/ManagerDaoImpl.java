@@ -182,17 +182,16 @@ public class ManagerDaoImpl implements ManagerDao {
 
     @Override
     public boolean addCourse(Course course) {
-        String sql= "insert into course values(\'"+
-                course.getCourse_id()+"\',\'"+
-                course.getCourse_name()+"\',\'"+
-                course.getDept_name()+"\',\'"+
-                course.getCredit()+"\' )";
-//        String sql= "insert into course values('"+
-//                course.getCourse_id()+"','"+
-//                course.getCourse_name()+"','"+
-//                course.getType()+"','"+
-//                course.getCredit()+"','"+
-//                course.getDept_name()+"')";
+//        String sql= "insert into course values(\'"+
+//                course.getCourse_id()+"\',\'"+
+//                course.getCourse_name()+"\',\'"+
+//                course.getDept_name()+"\',\'"+
+//                course.getCredit()+"\' )";
+        String sql= "insert into course values('"+
+                course.getCourse_id()+"','"+
+                course.getCourse_name()+"','"+
+                course.getDept_name()+"','"+
+                course.getCredit()+"')";
         return DAO.baseDao.execute(sql);
     }
 

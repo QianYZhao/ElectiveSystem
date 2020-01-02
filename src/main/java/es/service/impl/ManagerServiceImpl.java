@@ -122,34 +122,22 @@ public class ManagerServiceImpl implements ManagerService, UserService {
 
     @Override
     public boolean importing_students(String filename) {
-        try {
-            InputStream is = new FileInputStream(new File("./data/"+filename));
-            Workbook excel = WorkbookFactory.create(is);
-            is.close();
+        ReadExcel readExcel = new ReadExcelImpl();
+        List<Map<String,String>> list = readExcel.Read("data/"+filename);
 
-            for(int numSheet = 0;numSheet<excel.getNumberOfSheets();numSheet++){
-                Sheet sheet = excel.getSheetAt(numSheet);
-                if(sheet == null)continue;
-
-                for(int rowNum =1;rowNum<sheet.getLastRowNum();rowNum++){
-                    Row row = sheet.getRow(rowNum);
-                    if (row == null)continue;
-
-                    String student_id = row.getCell(0).getStringCellValue();
-                    String name = row.getCell(1).getStringCellValue();
-                    String enter_year = row.getCell(2).getStringCellValue();
-                    String dept_name = row.getCell(3).getStringCellValue();
-
-                    Student student = new Student(student_id,name,enter_year,dept_name);
-                    DAO.managerDao.addStudents(student);
-                }
-
-            }
-        }catch (IOException e){
-            e.printStackTrace();
+        boolean flag = true;
+        for (int j=0;j<list.size();j++) {
+            Map map = list.get(j);
+            String student_id = (String) map.get("student_id");
+            String student_name = (String) map.get("student_name");
+            String dept_name = (String) map.get("dept_name");
+            String entrance_year = (String)map.get("entrance_year");
+//            System.out.println((String)map.get("credit"));
+            Student student = new Student(student_id,student_name,entrance_year,dept_name);
+            flag = DAO.managerDao.addStudents(student);
+            if(!flag)break;
         }
-
-        return true;
+        return flag;
     }
 
     @Override
@@ -188,17 +176,19 @@ public class ManagerServiceImpl implements ManagerService, UserService {
         ReadExcel readExcel = new ReadExcelImpl();
         List<Map<String,String>> list = readExcel.Read("data/"+filename);
 
+        boolean flag = true;
         for (int j=0;j<list.size();j++) {
             Map map = list.get(j);
             String course_id = (String) map.get("course_id");
             String course_name = (String) map.get("course_name");
             String dept_name = (String) map.get("dept_name");
+            int credit = Integer.parseInt((String) map.get("credit"));
 //            System.out.println((String)map.get("credit"));
-            System.out.println(map);
-//            Course course = new Course(course_id,course_name,credit,dept_name);
-//            DAO.managerDao.addCourse(course);
+            Course course = new Course(course_id,course_name,credit,dept_name);
+            flag = DAO.managerDao.addCourse(course);
+            if(!flag)break;
         }
-        return true;
+        return flag;
     }
 
     @Override

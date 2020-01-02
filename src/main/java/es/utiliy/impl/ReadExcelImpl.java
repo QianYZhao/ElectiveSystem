@@ -30,24 +30,24 @@ public class ReadExcelImpl implements ReadExcel {
             List<String> title= new ArrayList<>();
             for (int i= firstLine.getFirstCellNum();i<firstLine.getLastCellNum();i++){
                 XSSFCell xssfCell = firstLine.getCell(i);
-                System.out.println(xssfCell.getStringCellValue());
                 title.add(xssfCell.getStringCellValue());
             }
-            for(int rowNum=1;rowNum<xssfSheet.getLastRowNum();rowNum++){
+            for(int rowNum=1;rowNum<=xssfSheet.getLastRowNum();rowNum++){
                 XSSFRow row = xssfSheet.getRow(rowNum);
                 Map<String ,String> map= new HashMap<>();
                 for(int colIx = row.getFirstCellNum(); colIx < row.getLastCellNum(); colIx++){
                     XSSFCell cell = row.getCell(colIx);
                     String value = "";
-                    if(cell.getCellType()== CellType.NUMERIC){
-                        Double x= cell.getNumericCellValue();
-                        value = String.valueOf(value);
-                    }
-                    else {
-                        value= cell.getStringCellValue();
-                    }
-                    System.out.println(value);
+                    cell.setCellType(CellType.STRING);
+//                    if(cell.getCellType()== CellType.NUMERIC){
+//                        Double x= cell.getNumericCellValue();
+//                        value = String.valueOf(value);
+//                    }
+//                    else {
+                    value= cell.getStringCellValue();
+//                    }
                     String key = title.get(colIx);
+//                    System.out.println(key + " "+value);
                     map.put(key,value);
                 }
                 list.add(map);

@@ -47,7 +47,7 @@ public class BaseDaoImpl implements BaseDao {
             }
             connection.close();
         }catch (SQLException e){
-            e.printStackTrace();
+           return null;
         }
        return list;
     }
@@ -64,7 +64,7 @@ public class BaseDaoImpl implements BaseDao {
                 bool= true;
             connection.close();
         }catch (SQLException e){
-            e.printStackTrace();
+            return false;
         }
         return bool;
     }

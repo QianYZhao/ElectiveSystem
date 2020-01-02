@@ -20,6 +20,8 @@ import java.util.Map;
 
 @Controller
 public class HomeController {
+    private String student_id;
+    private String teacher_id;
     @RequestMapping("/home")
     public String getHomePage() {
         return "homePage.html";
@@ -48,7 +50,7 @@ public class HomeController {
         HttpSession session = request.getSession();
         String studentId = request.getParameter("studentId");
         String password = request.getParameter("password");
-
+        student_id= studentId;
         Student student = new Student(studentId, password);
 
         StudentServiceImpl studentService = new StudentServiceImpl();
@@ -68,7 +70,7 @@ public class HomeController {
         HttpSession session = request.getSession();
         String teacherId = request.getParameter("teacherId");
         String password = request.getParameter("password");
-
+        teacher_id = teacherId;
         Teacher teacher = new Teacher(teacherId, password);
 
         TeacherServiceImpl teacherService = new TeacherServiceImpl();
@@ -84,7 +86,6 @@ public class HomeController {
 
     @RequestMapping(value = "/mLogin", method = RequestMethod.POST)
     public String mLogin(HttpServletRequest request) {
-        HttpSession session = request.getSession();
         String rootID = request.getParameter("managerId");
         String password = request.getParameter("password");
 
@@ -108,7 +109,7 @@ public class HomeController {
     public String getMySections(HttpSession session){
         List<Map<String,Object>> list = new ArrayList<>();
         StudentServiceImpl studentService = new StudentServiceImpl();
-        list = studentService.getMySections((String) session.getAttribute("studentId"));
+        list = studentService.getMySections(student_id);
         session.setAttribute("count_of_course", list.size());
 //        System.out.println(list);
         for (int i = 0; i < list.size(); i++) {
@@ -131,7 +132,6 @@ public class HomeController {
     @RequestMapping(value = "/take", method = RequestMethod.POST)
     public String take(HttpServletRequest request, HttpSession session) {
         String section_id = request.getParameter("section");
-        String student_id = (String) session.getAttribute("studentId");
         StudentServiceImpl studentService = new StudentServiceImpl();
         if (studentService.take(section_id, student_id)) {
             return "succeed.html";//返回成功的页面
@@ -149,7 +149,6 @@ public class HomeController {
     @RequestMapping(value = "/quit", method = RequestMethod.POST)
     public String quit(HttpServletRequest request, HttpSession session) {
         String section_id = request.getParameter("section");
-        String student_id = (String) session.getAttribute("studentId");
 
         StudentServiceImpl studentService = new StudentServiceImpl();
         if (studentService.drop(section_id, student_id)) {
@@ -162,7 +161,6 @@ public class HomeController {
 
     @RequestMapping(value = "/getSectionInfo", method = RequestMethod.GET)
     public String getSectionInfo(HttpSession session) {
-        String student_id = (String) session.getAttribute("student_id");
         StudentServiceImpl studentService = new StudentServiceImpl();
         List<Map<String, Object>> list = studentService.getSections();
 //        System.out.println(list);
@@ -187,7 +185,6 @@ public class HomeController {
 
     @RequestMapping(value = "/apply",method = RequestMethod.POST)
     public String apply(HttpServletRequest request,HttpSession session){
-        String student_id = (String)session.getAttribute("student_id");
         String section_id = request.getParameter("apply_section_id");
         String application = request.getParameter("application");
         StudentServiceImpl studentService = new StudentServiceImpl();
@@ -200,11 +197,8 @@ public class HomeController {
 
     @RequestMapping(value = "/viewExamInfo",method = RequestMethod.GET)
     public String viewExamInfo(HttpSession session){
-        String student_id = (String)session.getAttribute("student_id");
-        System.out.println(student_id);
         StudentServiceImpl studentService = new StudentServiceImpl();
         List<Map<String,Object>> list = studentService.viewExamInfo(student_id);
-        System.out.println(list);
         for(int i=0;i<list.size();i++){
             session.setAttribute("exam_id" + i, list.get(i).get("exam_id"));
             session.setAttribute("date" + i, list.get(i).get("date"));
