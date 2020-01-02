@@ -36,27 +36,13 @@ public class ReadExcelImpl implements ReadExcel {
                 XSSFRow row = xssfSheet.getRow(rowNum);
                 Map<String ,String> map= new HashMap<>();
                 for(int colIx = row.getFirstCellNum(); colIx < row.getLastCellNum(); colIx++){
-<<<<<<< HEAD
 
                     XSSFCell cell = row.getCell(colIx);
                     cell.setCellType(CellType.STRING);
                     String value= cell.getStringCellValue();
-                    map.put(title.get(colIx),value);
-=======
-                    XSSFCell cell = row.getCell(colIx);
-                    String value = "";
-                    cell.setCellType(CellType.STRING);
-//                    if(cell.getCellType()== CellType.NUMERIC){
-//                        Double x= cell.getNumericCellValue();
-//                        value = String.valueOf(value);
-//                    }
-//                    else {
-                    value= cell.getStringCellValue();
-//                    }
                     String key = title.get(colIx);
-//                    System.out.println(key + " "+value);
                     map.put(key,value);
->>>>>>> 23d3492c59694a68ce7f548e32237ce157f76d85
+
                 }
                 list.add(map);
             }
