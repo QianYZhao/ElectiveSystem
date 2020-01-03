@@ -115,7 +115,6 @@ public class StudentDaoImpl implements StudentDao {
     public List<Map<String, Object>> getSectionInfo(String section_id) {
         String sql ="select * " +
                 "from section natural join sec_course natural join course natural join sec_classroom " +
-                "from section natural join sec_classroom " +
                 "natural join classroom where section_id ='"+section_id+"'";
         List<Map<String, Object>> list= DAO.baseDao.search(sql);
         return list;
@@ -124,9 +123,9 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public List<Map<String, Object>> getSectionExam(String section_id) {
-        String sql = "select *" +
+        String sql = "select * " +
                 "from sec_exam natural join examination" +
-                "where section_id ='" + section_id + "'";
+                " where section_id ='"+section_id+"'";
         List<Map<String, Object>> list = DAO.baseDao.search(sql);
         return list;
     }
